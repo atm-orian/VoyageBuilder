@@ -18,26 +18,11 @@ CREATE TABLE llx_voyagebuilder_voyage(
 	-- BEGIN MODULEBUILDER FIELDS
 	rowid integer AUTO_INCREMENT PRIMARY KEY NOT NULL, 
 	ref varchar(128) DEFAULT '(PROV)' NOT NULL, 
-	label varchar(255),
-    tarif double,
-    pays varchar(100),
-    date_deb date,
-    date_fin date,
-    date_creation date,
-    tms timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    entity int
-# 	amount double DEFAULT NULL,
-# 	qty real,
-# 	fk_soc integer,
-# 	fk_project integer,
-# 	description text,
-# 	note_public text,
-# 	note_private text,
-# 	fk_user_creat integer NOT NULL,
-# 	fk_user_modif integer,
-# 	last_main_doc varchar(255),
-# 	import_key varchar(14),
-# 	model_pdf varchar(255),
-# 	status integer NOT NULL
+	label varchar(255), 
+	tarif double, 
+	pays integer, 
+	date_deb date, 
+	date_fin date, 
+	tag integer
 	-- END MODULEBUILDER FIELDS
 ) ENGINE=innodb;

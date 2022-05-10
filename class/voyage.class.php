@@ -104,51 +104,21 @@ class Voyage extends CommonObject
 	public $fields=array(
 		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
 		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'validate'=>'1', 'comment'=>"Reference of object"),
-        'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>1, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak','showoncombobox'=>'2', 'validate'=>'1',),
-        'tarif' => array('type' => 'double', 'length' => 10, 'label' => 'Price', 'enabled' => 1, 'visible' => 1, 'notnull' => 0, 'index' => 1, 'position' => 15),
-        'pays' => array('type' => 'integer:Ccountry:core/class/ccountry.class.php', 'label' => 'Pays', 'length' => 50, 'enabled' => 1, 'visible' => 1, 'notnull' => 0, 'position' => 16, 'required' => true, 'default' => -1),
-        'date_deb' => array('type' => 'date','label' => 'Date de départ', 'enabled' => 1, 'visible' => 1, 'notnull' => 0, 'position' => 17),
-        'date_fin' => array('type' => 'date', 'label' => 'Date d\'arrivée', 'enabled' => 1, 'visible' => 1, 'notnull' => 0, 'position' => 18)
-
-//		'amount' => array('type'=>'price', 'label'=>'Amount', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>1, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount", 'validate'=>'1',),
-//		'qty' => array('type'=>'real', 'label'=>'Qty', 'enabled'=>'1', 'position'=>45, 'notnull'=>0, 'visible'=>1, 'default'=>'0', 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"Help text for quantity", 'validate'=>'1',),
-//		'fk_soc' => array('type'=>'integer:Societe:societe/class/societe.class.php:1:status=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'ThirdParty', 'enabled'=>'1', 'position'=>50, 'notnull'=>-1, 'visible'=>1, 'index'=>1, 'css'=>'maxwidth500 widthcentpercentminusxx', 'help'=>"LinkToThirparty", 'validate'=>'1',),
-//		'fk_project' => array('type'=>'integer:Project:projet/class/project.class.php:1', 'label'=>'Project', 'enabled'=>'1', 'position'=>52, 'notnull'=>-1, 'visible'=>-1, 'index'=>1, 'css'=>'maxwidth500 widthcentpercentminusxx', 'validate'=>'1',),
-//		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>3, 'validate'=>'1',),
-//		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0, 'cssview'=>'wordbreak', 'validate'=>'1',),
-//		'note_private' => array('type'=>'html', 'label'=>'NotePrivate', 'enabled'=>'1', 'position'=>62, 'notnull'=>0, 'visible'=>0, 'cssview'=>'wordbreak', 'validate'=>'1',),
-//		'date_creation' => array('type'=>'datetime', 'label'=>'DateCreation', 'enabled'=>'1', 'position'=>500, 'notnull'=>1, 'visible'=>-2,),
-//		'tms' => array('type'=>'timestamp', 'label'=>'DateModification', 'enabled'=>'1', 'position'=>501, 'notnull'=>0, 'visible'=>-2,),
-//		'fk_user_creat' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserAuthor', 'enabled'=>'1', 'position'=>510, 'notnull'=>1, 'visible'=>-2, 'foreignkey'=>'user.rowid',),
-//		'fk_user_modif' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserModif', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>-2,),
-//		'last_main_doc' => array('type'=>'varchar(255)', 'label'=>'LastMainDoc', 'enabled'=>'1', 'position'=>600, 'notnull'=>0, 'visible'=>0,),
-//		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>1000, 'notnull'=>-1, 'visible'=>-2,),
-//		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>1010, 'notnull'=>-1, 'visible'=>0,),
-//		'status' => array('type'=>'integer', 'label'=>'Status', 'enabled'=>'1', 'position'=>1000, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;'), 'validate'=>'1',),
+		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>1, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2', 'validate'=>'1',),
+		'tarif' => array('type'=>'double', 'label'=>'Price', 'enabled'=>'1', 'position'=>15, 'notnull'=>0, 'visible'=>1, 'index'=>1,),
+		'pays' => array('type'=>'integer:Ccountry:core/class/ccountry.class.php', 'label'=>'Pays', 'enabled'=>'1', 'position'=>16, 'notnull'=>0, 'visible'=>1, 'default'=>'-1',),
+		'date_deb' => array('type'=>'date', 'label'=>'Date de départ', 'enabled'=>'1', 'position'=>17, 'notnull'=>0, 'visible'=>1,),
+		'date_fin' => array('type'=>'date', 'label'=>'Date darrivée', 'enabled'=>'1', 'position'=>18, 'notnull'=>0, 'visible'=>1,),
+//		'tag' => array('type'=>'chkbxlst:c_voyagebuilder_voyage_tag:label:rowid', 'label'=>'catégorie', 'enabled'=>'1', 'position'=>19, 'notnull'=>0, 'visible'=>1,),
 	);
 	public $rowid;
 	public $ref;
-    public $tarif;
-    public $pays;
-    public $date_deb;
-    public $date_fin;
-
-//	public $label;
-//	public $amount;
-//	public $qty;
-//	public $fk_soc;
-//	public $fk_project;
-//	public $description;
-//	public $note_public;
-//	public $note_private;
-//	public $date_creation;
-//	public $tms;
-//	public $fk_user_creat;
-//	public $fk_user_modif;
-//	public $last_main_doc;
-//	public $import_key;
-//	public $model_pdf;
-//	public $status;
+	public $label;
+	public $tarif;
+	public $pays;
+	public $date_deb;
+	public $date_fin;
+	public $tag;
 	// END MODULEBUILDER PROPERTIES
 
 
@@ -247,7 +217,69 @@ class Voyage extends CommonObject
 		return $resultcreate;
 	}
 
-	/**
+    /** retourne dans un tableau tous les tags de la base
+     * @return array|int
+     */
+    public static function getStaticArrayTag()
+    {
+        global $db;
+
+        $sql = 'SELECT vt.label, vt.rowid FROM ' . MAIN_DB_PREFIX.'c_voyagebuilder_voyage_tag vt';
+        $resql = $db->query($sql);
+
+        if($resql){
+            while($obj = $db->fetch_object($resql)){
+                $ArrayLabel[$obj->rowid] = $obj->label;
+            }
+            return $ArrayLabel;
+        }
+        else return -1;
+
+    }
+
+    /** retourne dans un tableau tous les tags associés à un voyage
+     * @param int $id
+     * @return array|int
+     */
+    public static function getStaticArrayPreselectedTag($id)
+    {
+        global $db;
+        $sql = 'SELECT vt.label, vt.rowid FROM ' . MAIN_DB_PREFIX.'c_voyagebuilder_voyage_tag vt';
+        $sql .= ' LEFT JOIN ' .MAIN_DB_PREFIX.'element_element ee ON (vt.rowid = ee.fk_target )';
+        $sql .= ' WHERE ee.fk_source='.$id;
+        $resql = $db->query($sql);
+
+        if($resql){
+            $ArrayLabel = [];
+            while($obj = $db->fetch_object($resql)){
+                $ArrayLabel[] = $obj->rowid;
+            }
+            return $ArrayLabel;
+        }
+        else return -1;
+    }
+
+    /** Lie un seul tag à un voyage
+     * @param int $rowidVoyage
+     * @param int $valueRowidTag
+     * @return bool
+     */
+    public function setLabelTag($rowidVoyage, $valueRowidTag)
+    {
+        global $db;
+
+        $sql = 'INSERT INTO ' . MAIN_DB_PREFIX.'element_element (fk_source, fktarget) VALUES (\''.$rowidVoyage.'\',\''.$valueRowidTag.'\')';
+        $resql = $db->query($sql);
+
+        if ($resql) return true;
+
+        return false;
+
+
+    }
+
+
+    /**
 	 * Clone an object into another one
 	 *
 	 * @param  	User 	$user      	User that creates
