@@ -217,67 +217,94 @@ class Voyage extends CommonObject
 		return $resultcreate;
 	}
 
-    /** retourne dans un tableau tous les tags de la base
-     * @return array|int
-     */
-    public static function getStaticArrayTag()
-    {
-        global $db;
-
-        $sql = 'SELECT vt.label, vt.rowid FROM ' . MAIN_DB_PREFIX.'c_voyagebuilder_voyage_tag vt';
-        $resql = $db->query($sql);
-
-        if($resql){
-            while($obj = $db->fetch_object($resql)){
-                $ArrayLabel[$obj->rowid] = $obj->label;
-            }
-            return $ArrayLabel;
-        }
-        else return -1;
-
-    }
-
-    /** retourne dans un tableau tous les tags associés à un voyage
-     * @param int $id
-     * @return array|int
-     */
-    public static function getStaticArrayPreselectedTag($id)
-    {
-        global $db;
-        $sql = 'SELECT vt.label, vt.rowid FROM ' . MAIN_DB_PREFIX.'c_voyagebuilder_voyage_tag vt';
-        $sql .= ' LEFT JOIN ' .MAIN_DB_PREFIX.'element_element ee ON (vt.rowid = ee.fk_target )';
-        $sql .= ' WHERE ee.fk_source='.$id;
-        $resql = $db->query($sql);
-
-        if($resql){
-            $ArrayLabel = [];
-            while($obj = $db->fetch_object($resql)){
-                $ArrayLabel[] = $obj->rowid;
-            }
-            return $ArrayLabel;
-        }
-        else return -1;
-    }
-
-    /** Lie un seul tag à un voyage
+    /**
+     *  Cette fonction permet de mettre un tarif par défault à un voyage en fonction des catégories qui lui sont associés
+     * Si il n'y a qu'une seule catégorie alors le tarif sera celui qui lui est associé
+     * si il il y a plusieurs catégories alors le tarif sera le tarif le plus petit parmi toutes les catégories associées
      * @param int $rowidVoyage
+     * @param array $TRowidTags
+     * @return int
+     */
+    public function setTarif($rowidVoyage,$TRowidTags)
+    {
+        $i =0;
+        global $db;
+        $object = new voyage($db);
+
+        if(!empty($TRowidTags))
+        {
+            if (count($TRowidTags) == 1) // IF THERE IS ONLY ONE TAG
+            {
+                $tarift = $object->findTarifWithOneTag($TRowidTags[0]);
+                $testSTDOP = $object->setTarifDependsOneTag($rowidVoyage,$tarift);
+                if ($testSTDOP){
+                    return 1;
+                }
+                else return -1;
+            }
+
+            else // IF THERE ARE FEW TAGS
+            {
+                $tarift = $object->findTarifWithOneTag($TRowidTags[0]);
+
+                foreach($TRowidTags as $row)
+                {
+                    if ($tarift > $object->findTarifWithOneTag($row))
+                    {
+                        $tarift = $object->findTarifWithOneTag($row);
+                    }
+                }
+            }
+
+            $testSTDOP = $object->setTarifDependsOneTag($rowidVoyage,$tarift);
+            if ($testSTDOP){
+                return 1;
+            }
+            else return -1;
+        }
+        else return -1;
+
+    }
+
+    /**
+     * Cette fonction permet de trouver le tarif associé à une catégorie
      * @param int $valueRowidTag
+     * @return double
+     */
+    public function findTarifWithOneTag($valueRowidTag)
+    {
+        global $db;
+        $sql = 'SELECT vt.tarift FROM '.MAIN_DB_PREFIX.'c_voyagebuilder_voyage_tag vt';
+        $sql .= ' WHERE vt.rowid='.$valueRowidTag;
+        $resql = $db->query($sql);
+
+        if($resql){
+            $obj = $db->fetch_object($resql);
+            return $obj->tarift;
+        }
+        else return -1;
+
+    }
+
+    /**
+     * Cette fonction permet d'enregistrer un tarif sur un voyage souhaité
+     * dans notre cas le tarif sera celui associé à un tag recherché, ce tarif sera récupéré via la fonction findTarifWithOneTag()
+     * @param int $rowidVoyage
+     * @param double $tarift
      * @return bool
      */
-    public function setLabelTag($rowidVoyage, $valueRowidTag)
+    public function setTarifDependsOneTag($rowidVoyage,$tarift)
     {
         global $db;
-
-        $sql = 'INSERT INTO ' . MAIN_DB_PREFIX.'element_element (fk_source, fktarget) VALUES (\''.$rowidVoyage.'\',\''.$valueRowidTag.'\')';
+        $sql = 'UPDATE ' . MAIN_DB_PREFIX.'voyagebuilder_voyage SET tarif = '.$tarift;
+        $sql .=' WHERE rowid='.$rowidVoyage;
         $resql = $db->query($sql);
 
         if ($resql) return true;
 
         return false;
 
-
     }
-
 
     /**
 	 * Clone an object into another one

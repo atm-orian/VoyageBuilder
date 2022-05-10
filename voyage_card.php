@@ -94,11 +94,7 @@ $contextpage = GETPOST('contextpage', 'aZ') ? GETPOST('contextpage', 'aZ') : 'vo
 $backtopage = GETPOST('backtopage', 'alpha');
 $backtopageforcancel = GETPOST('backtopageforcancel', 'alpha');
 $lineid   = GETPOST('lineid', 'int');
-$ArrayLabel = Voyage::getStaticArrayTag();
 
-if($id){
-    $ArrayLabelPreselected = Voyage::getStaticArrayPreselectedTag($id);
-}
 
 // Initialize technical objects
 $object = new Voyage($db);
@@ -210,16 +206,6 @@ if (empty($reshook)) {
 	$trackid = 'voyage'.$object->id;
 	include DOL_DOCUMENT_ROOT.'/core/actions_sendmails.inc.php';
 }
-//var_dump($action);
-if ($action == 'add'){
-    $TRowidTags = GETPOST('tag','array');
-    foreach ($TRowidTags as $valueRowidTag) {
-        $object->add_object_linked('tag', $valueRowidTag);
-    }
-}
-
-
-
 
 /*
  * View
