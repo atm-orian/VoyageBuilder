@@ -210,6 +210,25 @@ class Voyage extends CommonObject
 	 */
 	public function create(User $user, $notrigger = false)
 	{
+        global $conf;
+        if(empty($this->tarif) && !empty($this->array_options['options_tag']))
+        {
+            $TTag = explode(',', $this->array_options['options_tag']);
+            $tarift = $this->findTarifWithOneTag($TTag[0]);
+
+            foreach ($TTag as $valueTag)
+            {
+                if ($tarift > $this->findTarifWithOneTag($valueTag))
+                {
+                    $tarift = $this->findTarifWithOneTag($valueTag);
+                }
+            }
+            $this->tarif = $tarift;
+        }
+        else if(empty($this->tarif) && empty($this->array_options['options_tag'])){
+            $this->tarif = $conf->global->VOYAGEBUILDER_MYPARAM1;
+        }
+
 		$resultcreate = $this->createCommon($user, $notrigger);
 
 		//$resultvalidate = $this->validate($user, $notrigger);
@@ -524,6 +543,27 @@ class Voyage extends CommonObject
 	 */
 	public function update(User $user, $notrigger = false)
 	{
+        global $conf;
+
+        if(empty($this->tarif) && !empty($this->array_options['options_tag']))
+        {
+            $TTag = explode(',', $this->array_options['options_tag']);
+            $tarift = $this->findTarifWithOneTag($TTag[0]);
+
+            foreach ($TTag as $valueTag)
+            {
+                if ($tarift > $this->findTarifWithOneTag($valueTag))
+                {
+                    $tarift = $this->findTarifWithOneTag($valueTag);
+                }
+            }
+            $this->tarif = $tarift;
+        }
+        else if(empty($this->tarif) && empty($this->array_options['options_tag'])){
+            $this->tarif = $conf->global->VOYAGEBUILDER_MYPARAM1;
+        }
+
+
 		return $this->updateCommon($user, $notrigger);
 	}
 
