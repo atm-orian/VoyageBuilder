@@ -115,6 +115,7 @@ class modVoyageBuilder extends DolibarrModules
 			),
 			// Set here all hooks context managed by module. To find available hook context, make a "grep -r '>initHooks(' *" on source code. You can also set hook context to 'all'
 			'hooks' => array(
+                'productcard'
 				//   'data' => array(
 				//       'hookcontext1',
 				//       'hookcontext2',
@@ -327,7 +328,8 @@ class modVoyageBuilder extends DolibarrModules
 			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
 			'mainmenu'=>'voyagebuilder',
 			'leftmenu'=>'',
-			'url'=>'/voyagebuilder/voyagebuilderindex.php',
+//			'url'=>'/voyagebuilder/voyagebuilderindex.php',
+            'url'=>'/voyagebuilder/voyage_list.php',
 			'langs'=>'voyagebuilder@voyagebuilder', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000 + $r,
 			'enabled'=>'$conf->voyagebuilder->enabled', // Define condition to show or hide menu entry. Use '$conf->voyagebuilder->enabled' if entry must be visible if module is enabled.
@@ -387,7 +389,7 @@ class modVoyageBuilder extends DolibarrModules
             'fk_menu'=>'fk_mainmenu=voyagebuilder',
             // This is a Left menu entry
             'type'=>'left',
-            'titre'=>'List Voyage',
+            'titre'=>'ListVoyage',
             'mainmenu'=>'voyagebuilder',
             'leftmenu'=>'voyagebuilder_voyage',
             'url'=>'/voyagebuilder/voyage_list.php',
@@ -407,7 +409,7 @@ class modVoyageBuilder extends DolibarrModules
             'fk_menu'=>'fk_mainmenu=voyagebuilder,fk_leftmenu=voyagebuilder_voyage',
             // This is a Left menu entry
             'type'=>'left',
-            'titre'=>'New Voyage',
+            'titre'=>'NewVoyage',
             'mainmenu'=>'voyagebuilder',
             'leftmenu'=>'voyagebuilder_voyage',
             'url'=>'/voyagebuilder/voyage_card.php?action=create',

@@ -94,7 +94,7 @@ $contextpage = GETPOST('contextpage', 'aZ') ? GETPOST('contextpage', 'aZ') : 'vo
 $backtopage = GETPOST('backtopage', 'alpha');
 $backtopageforcancel = GETPOST('backtopageforcancel', 'alpha');
 $lineid   = GETPOST('lineid', 'int');
-
+//var_dump($_REQUEST);
 
 // Initialize technical objects
 $object = new Voyage($db);
@@ -266,10 +266,6 @@ if ($action == 'create') {
 	// Common attributes
 	include DOL_DOCUMENT_ROOT.'/core/tpl/commonfields_add.tpl.php';
 
-//    print '<tr><td > Catégorie </td>';
-//    print '<td>'.Form::multiselectarray('tag',$ArrayLabel, $ArrayLabelPreselected).'</td>';
-//    print '</tr>';
-
 	// Other attributes
 	include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_add.tpl.php';
 
@@ -429,6 +425,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 
 	// Other attributes. Fields from hook formObjectOptions and Extrafields.
 	include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_view.tpl.php';
+    //var_dump($object);exit;
 
 	print '</table>';
 	print '</div>';
