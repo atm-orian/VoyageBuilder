@@ -270,6 +270,7 @@ if ($action == 'create') {
 	// Other attributes
 	include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_add.tpl.php';
 
+
 	print '</table>'."\n";
 
 	print dol_get_fiche_end();
@@ -426,7 +427,8 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 
 	// Other attributes. Fields from hook formObjectOptions and Extrafields.
 	include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_view.tpl.php';
-    //var_dump($object);exit;
+//    var_dump($object);exit;
+
 
 	print '</table>';
 	print '</div>';

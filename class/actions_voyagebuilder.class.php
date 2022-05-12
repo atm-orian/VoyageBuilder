@@ -360,7 +360,7 @@ class ActionsVoyageBuilder
         global $conf, $db, $langs ;
         if (in_array('productcard', explode(':', $parameters['context'])) && $object->type == Product::TYPE_PRODUCT )
         {
-            print '<a class="butAction" href="'.DOL_URL_ROOT .'/custom/voyagebuilder/voyage_card.php?action=create&idProduct='.$object->id.'">'.$langs->trans("CreateVoyage").'</a>'."\n";
+            print '<a class="butAction" href="'.DOL_URL_ROOT .'/custom/voyagebuilder/voyage_card.php?action=create&options_product='.$object->id.'">'.$langs->trans("CreateVoyage").'</a>'."\n";
         }
 
         return 0;

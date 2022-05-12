@@ -63,6 +63,7 @@ Tag = Catégorie
 
 ListVoyage = Liste des voyages
 NewVoyage = Nouveau voyage
+VoyageExport = Voyage - Export de la liste des voyages
 
 #
 # Dictionnaire
@@ -75,3 +76,4 @@ VoyageBTag = VoyageBuilder - Catégorie de voyage
 #
 
 CreateVoyage = Creer Voyage
+

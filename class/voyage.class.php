@@ -104,12 +104,11 @@ class Voyage extends CommonObject
 	public $fields=array(
 		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
 		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'validate'=>'1', 'comment'=>"Reference of object"),
-		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>1, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2', 'validate'=>'1',),
-		'tarif' => array('type'=>'double', 'label'=>'Price', 'enabled'=>'1', 'position'=>15, 'notnull'=>0, 'visible'=>1, 'index'=>1,),
+		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2', 'validate'=>'1',),
+		'tarif' => array('type'=>'price', 'label'=>'Price', 'enabled'=>'1', 'position'=>15, 'notnull'=>0, 'visible'=>1, 'index'=>1,),
 		'pays' => array('type'=>'integer:Ccountry:core/class/ccountry.class.php', 'label'=>'Pays', 'enabled'=>'1', 'position'=>16, 'notnull'=>0, 'visible'=>1, 'default'=>'-1',),
 		'date_deb' => array('type'=>'date', 'label'=>'Date de départ', 'enabled'=>'1', 'position'=>17, 'notnull'=>0, 'visible'=>1,),
-		'date_fin' => array('type'=>'date', 'label'=>'Date darrivée', 'enabled'=>'1', 'position'=>18, 'notnull'=>0, 'visible'=>1,),
-//		'tag' => array('type'=>'chkbxlst:c_voyagebuilder_voyage_tag:label:rowid', 'label'=>'catégorie', 'enabled'=>'1', 'position'=>19, 'notnull'=>0, 'visible'=>1,),
+		'date_fin' => array('type'=>'date', 'label'=>'Date d\'arrivée', 'enabled'=>'1', 'position'=>18, 'notnull'=>0, 'visible'=>1,),
 	);
 	public $rowid;
 	public $ref;
@@ -118,7 +117,7 @@ class Voyage extends CommonObject
 	public $pays;
 	public $date_deb;
 	public $date_fin;
-	public $tag;
+
 	// END MODULEBUILDER PROPERTIES
 
 

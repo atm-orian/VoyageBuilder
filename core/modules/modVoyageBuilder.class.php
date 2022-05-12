@@ -83,12 +83,12 @@ class modVoyageBuilder extends DolibarrModules
 		// If file is in theme/yourtheme/img directory under name object_pictovalue.png, use this->picto='pictovalue'
 		// If file is in module/img directory under name object_pictovalue.png, use this->picto='pictovalue@module'
 		// To use a supported fa-xxx css style of font awesome, use this->picto='xxx'
-		$this->picto = 'generic';
+		$this->picto = 'voyage@voyagebuilder';
 
 		// Define some features supported by module (triggers, login, substitutions, menus, css, etc...)
 		$this->module_parts = array(
 			// Set this to 1 if module has its own trigger directory (core/triggers)
-			'triggers' => 0,
+			'triggers' => 1,
 			// Set this to 1 if module has its own login method file (core/login)
 			'login' => 0,
 			// Set this to 1 if module has its own substitution function file (core/substitutions)
@@ -122,7 +122,6 @@ class modVoyageBuilder extends DolibarrModules
 				//   ),
 				//   'entity' => '0',
 			),
-            'triggers' => 1,
 			// Set this to 1 if features of module are opened to external users
 			'moduleforexternal' => 0,
 		);
@@ -430,10 +429,10 @@ class modVoyageBuilder extends DolibarrModules
 		// Exports profiles provided by this module
 		$r = 1;
 		/* BEGIN MODULEBUILDER EXPORT VOYAGE */
-		/*
+
 		$langs->load("voyagebuilder@voyagebuilder");
 		$this->export_code[$r]=$this->rights_class.'_'.$r;
-		$this->export_label[$r]='VoyageLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
+		$this->export_label[$r]='VoyageExport';	// Translation key (used only if key ExportDataset_xxx_z not found)
 		$this->export_icon[$r]='voyage@voyagebuilder';
 		// Define $this->export_fields_array, $this->export_TypeFields_array and $this->export_entities_array
 		$keyforclass = 'Voyage'; $keyforclassfile='/voyagebuilder/class/voyage.class.php'; $keyforelement='voyage@voyagebuilder';
@@ -442,20 +441,20 @@ class modVoyageBuilder extends DolibarrModules
 		//unset($this->export_fields_array[$r]['t.fieldtoremove']);
 		//$keyforclass = 'VoyageLine'; $keyforclassfile='/voyagebuilder/class/voyage.class.php'; $keyforelement='voyageline@voyagebuilder'; $keyforalias='tl';
 		//include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
-		$keyforselect='voyage'; $keyforaliasextra='extra'; $keyforelement='voyage@voyagebuilder';
+		$keyforselect='voyagebuilder_voyage'; $keyforaliasextra='extra'; $keyforelement='voyage@voyagebuilder';
 		include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
-		//$keyforselect='voyageline'; $keyforaliasextra='extraline'; $keyforelement='voyageline@voyagebuilder';
-		//include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
+//		$keyforselect='voyageline'; $keyforaliasextra='extraline'; $keyforelement='voyageline@voyagebuilder';
+		include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
 		//$this->export_dependencies_array[$r] = array('voyageline'=>array('tl.rowid','tl.ref')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
 		//$this->export_special_array[$r] = array('t.field'=>'...');
 		//$this->export_examplevalues_array[$r] = array('t.field'=>'Example');
 		//$this->export_help_array[$r] = array('t.field'=>'FieldDescHelp');
 		$this->export_sql_start[$r]='SELECT DISTINCT ';
-		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'voyage as t';
-		//$this->export_sql_end[$r]  =' LEFT JOIN '.MAIN_DB_PREFIX.'voyage_line as tl ON tl.fk_voyage = t.rowid';
+		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'voyagebuilder_voyage as t';
+		$this->export_sql_end[$r] .=' LEFT JOIN '.MAIN_DB_PREFIX.'voyagebuilder_voyage_extrafields as extra ON extra.fk_object = t.rowid';
 		$this->export_sql_end[$r] .=' WHERE 1 = 1';
-		$this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('voyage').')';
-		$r++; */
+		//$this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('voyage').')';
+		$r++; /**/
 		/* END MODULEBUILDER EXPORT VOYAGE */
 
 		// Imports profiles provided by this module
