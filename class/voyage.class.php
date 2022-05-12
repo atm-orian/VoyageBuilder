@@ -211,6 +211,12 @@ class Voyage extends CommonObject
 	public function create(User $user, $notrigger = false)
 	{
         global $conf;
+
+//        if (!empty(GETPOST('idProduct','int'))){
+//            $idProduct = GETPOST('idProduct','int');
+//            $this->array_options['options_product'] = $idProduct;
+//        }
+
         if(empty($this->tarif) && !empty($this->array_options['options_tag']))
         {
             $TTag = explode(',', $this->array_options['options_tag']);

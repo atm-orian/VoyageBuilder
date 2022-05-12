@@ -122,6 +122,7 @@ class modVoyageBuilder extends DolibarrModules
 				//   ),
 				//   'entity' => '0',
 			),
+            'triggers' => 1,
 			// Set this to 1 if features of module are opened to external users
 			'moduleforexternal' => 0,
 		);

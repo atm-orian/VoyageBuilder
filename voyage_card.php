@@ -239,6 +239,7 @@ llxHeader('', $title, $help_url);
 
 // Part to create
 if ($action == 'create') {
+
 	if (empty($permissiontoadd)) {
 		accessforbidden($langs->trans('NotEnoughPermissions'), 0, 1);
 		exit;

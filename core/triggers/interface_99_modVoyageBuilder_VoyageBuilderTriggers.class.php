@@ -31,6 +31,8 @@
  */
 
 require_once DOL_DOCUMENT_ROOT.'/core/triggers/dolibarrtriggers.class.php';
+dol_include_once('/voyagebuilder/class/voyage.class.php');
+
 
 
 /**
@@ -90,6 +92,8 @@ class InterfaceVoyageBuilderTriggers extends DolibarrTriggers
 	 */
 	public function runTrigger($action, $object, User $user, Translate $langs, Conf $conf)
 	{
+
+        global $conf, $db;
 		if (empty($conf->voyagebuilder) || empty($conf->voyagebuilder->enabled)) {
 			return 0; // If module is not enabled, we do nothing
 		}
@@ -109,8 +113,37 @@ class InterfaceVoyageBuilderTriggers extends DolibarrTriggers
 			return call_user_func($callback, $action, $object, $user, $langs, $conf);
 		};
 
+        if ($action == 'PRODUCT_DELETE')
+        {
+            $select = "SELECT fk_object FROM ". MAIN_DB_PREFIX. "voyagebuilder_voyage_extrafields WHERE product=".$object->id;
+            $reselect = $db->query($select);
+            $voyage = new Voyage($db);
+
+            if(!$reselect)
+            {
+                dol_print_error($db);
+                exit;
+            }
+
+            while($obj = $db->fetch_object($reselect))
+            {
+                if(!empty($obj->fk_object))
+                {
+                    $voyage->fetch($obj->fk_object);
+
+                    if($voyage->fetch($obj->fk_object) <= 0)
+                    {
+                        dol_print_error($db);
+                        exit;
+                    }
+                    $voyage->delete($user, $notrigger);
+                }
+            }
+
+        }
+
 		// Or you can execute some code here
-		switch ($action) {
+//		switch ($action) {
 			// Users
 			//case 'USER_CREATE':
 			//case 'USER_MODIFY':
@@ -313,10 +346,10 @@ class InterfaceVoyageBuilderTriggers extends DolibarrTriggers
 
 			// and more...
 
-			default:
-				dol_syslog("Trigger '".$this->name."' for action '$action' launched by ".__FILE__.". id=".$object->id);
-				break;
-		}
+//			default:
+//				dol_syslog("Trigger '".$this->name."' for action '$action' launched by ".__FILE__.". id=".$object->id);
+//				break;
+//		}
 
 		return 0;
 	}
