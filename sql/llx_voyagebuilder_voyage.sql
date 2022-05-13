@@ -23,6 +23,7 @@ CREATE TABLE llx_voyagebuilder_voyage(
 	pays integer, 
 	date_deb date, 
 	date_fin date, 
-	tag integer
+	tag integer,
+    status integer
 	-- END MODULEBUILDER FIELDS
 ) ENGINE=innodb;
