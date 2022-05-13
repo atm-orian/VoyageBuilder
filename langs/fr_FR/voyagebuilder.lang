@@ -29,7 +29,7 @@ VoyageBuilderSetup = VoyageBuilder setup
 Settings = Settings
 VoyageBuilderSetupPage = VoyageBuilder setup page
 VOYAGEBUILDER_MYPARAM1 = Tarif par défaut
-VOYAGEBUILDER_MYPARAM1Tooltip = My param 1 tooltip
+VOYAGEBUILDER_MYPARAM1Tooltip = Tarif qui sera appliqué si le champ tarif n'est pas renseigné
 VOYAGEBUILDER_MYPARAM2=My param 2
 VOYAGEBUILDER_MYPARAM2Tooltip=My param 2 tooltip
 
