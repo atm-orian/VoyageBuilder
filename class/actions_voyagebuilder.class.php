@@ -358,24 +358,28 @@ class ActionsVoyageBuilder
     {
 
         global $conf, $db, $langs ;
-        if (in_array('productcard', explode(':', $parameters['context'])) && $object->type == Product::TYPE_PRODUCT )
+
+        $object->fetchObjectLinked(null, '', null, 'voyagebuilder');
+
+        if (in_array('productcard', explode(':', $parameters['context'])) && $object->type == Product::TYPE_PRODUCT && !($object->linkedObjectsIds))
         {
-            print '<a class="butAction" href="'.DOL_URL_ROOT .'/custom/voyagebuilder/voyage_card.php?action=create&options_product='.$object->id.'">'.$langs->trans("CreateVoyage").'</a>'."\n";
+            print '<a class="butAction " id="HookCreateVoyage" href="'.DOL_URL_ROOT .'/custom/voyagebuilder/voyage_card.php?action=create&options_product='.$object->id.'">'.$langs->trans("CreateVoyage").'</a>'."\n";
         }
 
         return 0;
+
     }
 
-    public function showLinkToObjectBlock($parameters, &$object, &$action, $hookmanager)
-    {
-        /** @var Voyage $object */
-        $this->results = ['voyagebuilder' => [
-            'enabled'=> true,
-            'perms' => 1,
-            'label' => 'LinkToVoyage',
-            'sql' => 'SELECT s.rowid as socid, s.nom as name, s.fk_type_product, t.rowid, t.ref, t.tarif FROM '.MAIN_DB_PREFIX.'product as s, '.MAIN_DB_PREFIX.'voyagebuilder_voyage as t, '.MAIN_DB_PREFIX.'voyagebuilder_voyage_extrafields te WHERE te.product = s.rowid AND t.rowid = te.fk_object AND t.rowid IN ('.$object->id.')'
-        ]];
-    }
+//    public function showLinkToObjectBlock($parameters, &$object, &$action, $hookmanager)
+//    {
+//        /** @var Voyage $object */
+//        $this->results = ['voyagebuilder' => [
+//            'enabled'=> true,
+//            'perms' => 1,
+//            'label' => 'LinkToVoyage',
+//            'sql' => 'SELECT s.rowid as socid, s.nom as name, s.fk_type_product, t.rowid, t.ref, t.tarif FROM '.MAIN_DB_PREFIX.'product as s, '.MAIN_DB_PREFIX.'voyagebuilder_voyage as t, '.MAIN_DB_PREFIX.'voyagebuilder_voyage_extrafields te WHERE te.product = s.rowid AND t.rowid = te.fk_object AND t.rowid IN ('.$object->id.')'
+//        ]];
+//    }
 
 
 	/* Add here any other hooked methods... */
