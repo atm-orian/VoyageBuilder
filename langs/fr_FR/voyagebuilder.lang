@@ -77,3 +77,9 @@ VoyageBTag = VoyageBuilder - Catégorie de voyage
 
 CreateVoyage = Creer Voyage
 
+
+#
+# Statut
+#
+
+VoyageValidate = Validé

@@ -35,12 +35,12 @@ class Voyage extends CommonObject
 	/**
 	 * @var string ID of module.
 	 */
-	public $module = 'voyagebuilder';
+//	public $module = 'voyagebuilder';
 
 	/**
 	 * @var string ID to identify managed object.
 	 */
-	public $element = 'voyage';
+	public $element = 'voyagebuilder';
 
 	/**
 	 * @var string Name of table without prefix where object is stored. This is also the key used for extrafields management.
@@ -109,6 +109,9 @@ class Voyage extends CommonObject
 		'pays' => array('type'=>'integer:Ccountry:core/class/ccountry.class.php', 'label'=>'Pays', 'enabled'=>'1', 'position'=>16, 'notnull'=>0, 'visible'=>1, 'default'=>'-1',),
 		'date_deb' => array('type'=>'date', 'label'=>'Date de départ', 'enabled'=>'1', 'position'=>17, 'notnull'=>0, 'visible'=>1,),
 		'date_fin' => array('type'=>'date', 'label'=>'Date d\'arrivée', 'enabled'=>'1', 'position'=>18, 'notnull'=>0, 'visible'=>1,),
+        'status' =>array('type'=>'smallint', 'label'=>'Status', 'enabled'=>1, 'visible'=>0, 'default' =>0,'notnull'=>1),
+        'fk_user_creat'=>array('type'=>'int', 'label'=>'fk_user_creat', 'enabled'=>1, 'visible'=>-2, 'notnull'=>1),
+        'fk_user_modif'=>array('type'=>'int', 'label'=>'fk_user_modif', 'enabled'=>1, 'visible'=>-2, 'notnull'=>1),
 	);
 	public $rowid;
 	public $ref;
@@ -117,6 +120,9 @@ class Voyage extends CommonObject
 	public $pays;
 	public $date_deb;
 	public $date_fin;
+    public $status;
+    public $fk_user_creat;
+    public $fk_user_modif;
 
 	// END MODULEBUILDER PROPERTIES
 
@@ -237,6 +243,9 @@ class Voyage extends CommonObject
 		$resultcreate = $this->createCommon($user, $notrigger);
 
 		//$resultvalidate = $this->validate($user, $notrigger);
+
+
+        $this->add_object_linked('product', $this->array_options['options_product'], $user, $notrigger);
 
 		return $resultcreate;
 	}
@@ -568,8 +577,10 @@ class Voyage extends CommonObject
             $this->tarif = $conf->global->VOYAGEBUILDER_MYPARAM1;
         }
 
+        $this->add_object_linked('product', $this->array_options['options_product'], $user, $notrigger);
 
-		return $this->updateCommon($user, $notrigger);
+
+        return $this->updateCommon($user, $notrigger);
 	}
 
 	/**
@@ -726,6 +737,7 @@ class Voyage extends CommonObject
 			$this->db->rollback();
 			return -1;
 		}
+
 	}
 
 
@@ -953,7 +965,7 @@ class Voyage extends CommonObject
 			global $langs;
 			//$langs->load("voyagebuilder@voyagebuilder");
 			$this->labelStatus[self::STATUS_DRAFT] = $langs->transnoentitiesnoconv('Draft');
-			$this->labelStatus[self::STATUS_VALIDATED] = $langs->transnoentitiesnoconv('Enabled');
+			$this->labelStatus[self::STATUS_VALIDATED] = $langs->transnoentitiesnoconv('VoyageValidate');
 			$this->labelStatus[self::STATUS_CANCELED] = $langs->transnoentitiesnoconv('Disabled');
 			$this->labelStatusShort[self::STATUS_DRAFT] = $langs->transnoentitiesnoconv('Draft');
 			$this->labelStatusShort[self::STATUS_VALIDATED] = $langs->transnoentitiesnoconv('Enabled');

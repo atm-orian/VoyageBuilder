@@ -366,6 +366,17 @@ class ActionsVoyageBuilder
         return 0;
     }
 
+    public function showLinkToObjectBlock($parameters, &$object, &$action, $hookmanager)
+    {
+        /** @var Voyage $object */
+        $this->results = ['voyagebuilder' => [
+            'enabled'=> true,
+            'perms' => 1,
+            'label' => 'LinkToVoyage',
+            'sql' => 'SELECT s.rowid as socid, s.nom as name, s.fk_type_product, t.rowid, t.ref, t.tarif FROM '.MAIN_DB_PREFIX.'product as s, '.MAIN_DB_PREFIX.'voyagebuilder_voyage as t, '.MAIN_DB_PREFIX.'voyagebuilder_voyage_extrafields te WHERE te.product = s.rowid AND t.rowid = te.fk_object AND t.rowid IN ('.$object->id.')'
+        ]];
+    }
+
 
 	/* Add here any other hooked methods... */
 }

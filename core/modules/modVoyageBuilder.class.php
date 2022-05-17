@@ -96,7 +96,7 @@ class modVoyageBuilder extends DolibarrModules
 			// Set this to 1 if module has its own menus handler directory (core/menus)
 			'menus' => 1,
 			// Set this to 1 if module overwrite template dir (core/tpl)
-			'tpl' => 0,
+			'tpl' => 1,
 			// Set this to 1 if module has its own barcode directory (core/modules/barcode)
 			'barcode' => 0,
 			// Set this to 1 if module has its own models directory (core/modules/xxx)
@@ -115,7 +115,8 @@ class modVoyageBuilder extends DolibarrModules
 			),
 			// Set here all hooks context managed by module. To find available hook context, make a "grep -r '>initHooks(' *" on source code. You can also set hook context to 'all'
 			'hooks' => array(
-                'productcard'
+                'productcard',
+                'commonobject'
 				//   'data' => array(
 				//       'hookcontext1',
 				//       'hookcontext2',
@@ -301,18 +302,18 @@ class modVoyageBuilder extends DolibarrModules
 		/* BEGIN MODULEBUILDER PERMISSIONS */
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Read objects of VoyageBuilder'; // Permission label
-		$this->rights[$r][4] = 'voyage';
-		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->voyagebuilder->voyage->read)
+//		$this->rights[$r][4] = 'voyage';
+		$this->rights[$r][4] = 'read'; // In php code, permission will be checked by test if ($user->rights->voyagebuilder->voyage->read)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Create/Update objects of VoyageBuilder'; // Permission label
-		$this->rights[$r][4] = 'voyage';
-		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->voyagebuilder->voyage->write)
+//		$this->rights[$r][4] = 'voyage';
+		$this->rights[$r][4] = 'write'; // In php code, permission will be checked by test if ($user->rights->voyagebuilder->voyage->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Delete objects of VoyageBuilder'; // Permission label
-		$this->rights[$r][4] = 'voyage';
-		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->voyagebuilder->voyage->delete)
+//		$this->rights[$r][4] = 'voyage';
+		$this->rights[$r][4] = 'delete'; // In php code, permission will be checked by test if ($user->rights->voyagebuilder->voyage->delete)
 		$r++;
 		/* END MODULEBUILDER PERMISSIONS */
 

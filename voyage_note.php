@@ -106,9 +106,9 @@ if ($id > 0 || !empty($ref)) {
 // Set $enablepermissioncheck to 1 to enable a minimum low level of checks
 $enablepermissioncheck = 0;
 if ($enablepermissioncheck) {
-	$permissiontoread = $user->rights->voyagebuilder->voyage->read;
-	$permissiontoadd = $user->rights->voyagebuilder->voyage->write;
-	$permissionnote = $user->rights->voyagebuilder->voyage->write; // Used by the include of actions_setnotes.inc.php
+	$permissiontoread = $user->rights->voyagebuilder->read;
+	$permissiontoadd = $user->rights->voyagebuilder->write;
+	$permissionnote = $user->rights->voyagebuilder->write; // Used by the include of actions_setnotes.inc.php
 } else {
 	$permissiontoread = 1;
 	$permissiontoadd = 1;

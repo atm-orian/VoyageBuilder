@@ -136,8 +136,8 @@ if ($id > 0 || !empty($ref)) {
 // Set $enablepermissioncheck to 1 to enable a minimum low level of checks
 $enablepermissioncheck = 0;
 if ($enablepermissioncheck) {
-	$permissiontoread = $user->rights->voyagebuilder->voyage->read;
-	$permissiontoadd = $user->rights->voyagebuilder->voyage->write;
+	$permissiontoread = $user->rights->voyagebuilder->read;
+	$permissiontoadd = $user->rights->voyagebuilder->write;
 } else {
 	$permissiontoread = 1;
 	$permissiontoadd = 1;
@@ -261,7 +261,7 @@ if ($object->id > 0) {
 	$objthirdparty = $object;
 	$objcon = new stdClass();
 
-	$out = '&origin='.urlencode($object->element.'@'.$object->module).'&originid='.urlencode($object->id);
+	$out = '&origin='.urlencode($object->element).'&originid='.urlencode($object->id);
 	$urlbacktopage = $_SERVER['PHP_SELF'].'?id='.$object->id;
 	$out .= '&backtopage='.urlencode($urlbacktopage);
 	$permok = $user->rights->agenda->myactions->create;

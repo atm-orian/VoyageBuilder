@@ -94,7 +94,7 @@ $contextpage = GETPOST('contextpage', 'aZ') ? GETPOST('contextpage', 'aZ') : 'vo
 $backtopage = GETPOST('backtopage', 'alpha');
 $backtopageforcancel = GETPOST('backtopageforcancel', 'alpha');
 $lineid   = GETPOST('lineid', 'int');
-//var_dump($_REQUEST);
+
 
 // Initialize technical objects
 $object = new Voyage($db);
@@ -127,11 +127,11 @@ include DOL_DOCUMENT_ROOT.'/core/actions_fetchobject.inc.php'; // Must be includ
 // Set $enablepermissioncheck to 1 to enable a minimum low level of checks
 $enablepermissioncheck = 0;
 if ($enablepermissioncheck) {
-	$permissiontoread = $user->rights->voyagebuilder->voyage->read;
-	$permissiontoadd = $user->rights->voyagebuilder->voyage->write; // Used by the include of actions_addupdatedelete.inc.php and actions_lineupdown.inc.php
-	$permissiontodelete = $user->rights->voyagebuilder->voyage->delete || ($permissiontoadd && isset($object->status) && $object->status == $object::STATUS_DRAFT);
-	$permissionnote = $user->rights->voyagebuilder->voyage->write; // Used by the include of actions_setnotes.inc.php
-	$permissiondellink = $user->rights->voyagebuilder->voyage->write; // Used by the include of actions_dellink.inc.php
+	$permissiontoread = $user->rights->voyagebuilder->read;
+	$permissiontoadd = $user->rights->voyagebuilder->write; // Used by the include of actions_addupdatedelete.inc.php and actions_lineupdown.inc.php
+	$permissiontodelete = $user->rights->voyagebuilder->delete || ($permissiontoadd && isset($object->status) && $object->status == $object::STATUS_DRAFT);
+	$permissionnote = $user->rights->voyagebuilder->write; // Used by the include of actions_setnotes.inc.php
+	$permissiondellink = $user->rights->voyagebuilder->write; // Used by the include of actions_dellink.inc.php
 } else {
 	$permissiontoread = 1;
 	$permissiontoadd = 1; // Used by the include of actions_addupdatedelete.inc.php and actions_lineupdown.inc.php
@@ -427,7 +427,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 
 	// Other attributes. Fields from hook formObjectOptions and Extrafields.
 	include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_view.tpl.php';
-//    var_dump($object);exit;
+
 
 
 	print '</table>';
@@ -574,7 +574,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 
 		// Show links to link elements
 		$linktoelem = $form->showLinkToObjectBlock($object, null, array('voyage'));
-		$somethingshown = $form->showLinkedObjectBlock($object, $linktoelem);
+        $somethingshown = $form->showLinkedObjectBlock($object, $linktoelem);
 
 
 		print '</div><div class="fichehalfright">';
