@@ -363,7 +363,7 @@ class ActionsVoyageBuilder
 
         if (in_array('productcard', explode(':', $parameters['context'])) && $object->type == Product::TYPE_PRODUCT && !($object->linkedObjectsIds))
         {
-            print '<a class="butAction " id="HookCreateVoyage" href="'.DOL_URL_ROOT .'/custom/voyagebuilder/voyage_card.php?action=create&options_product='.$object->id.'">'.$langs->trans("CreateVoyage").'</a>'."\n";
+            print '<a class="butAction" id="HookCreateVoyage" href="'.DOL_URL_ROOT .'/custom/voyagebuilder/voyage_card.php?action=create&options_product='.$object->id.'">'.$langs->trans("CreateVoyage").'</a>'."\n";
         }
 
         return 0;

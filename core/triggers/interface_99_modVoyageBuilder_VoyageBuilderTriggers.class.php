@@ -113,33 +113,30 @@ class InterfaceVoyageBuilderTriggers extends DolibarrTriggers
 			return call_user_func($callback, $action, $object, $user, $langs, $conf);
 		};
 
-        if ($action == 'PRODUCT_DELETE')
-        {
-            $select = "SELECT fk_object FROM ". MAIN_DB_PREFIX. "voyagebuilder_voyage_extrafields WHERE product=".$object->id;
-            $reselect = $db->query($select);
+        if ($action == 'PRODUCT_DELETE') {
             $voyage = new Voyage($db);
 
-            if(!$reselect)
-            {
-                dol_print_error($db);
-                exit;
-            }
+            $object->fetchObjectLinked(null, 'product');
+//            var_dump();exit;
 
-            while($obj = $db->fetch_object($reselect))
+            if ($object->linkedObjectsIds)
             {
-                if(!empty($obj->fk_object))
+//                var_dump($object->linkedObjectsIds);exit;
+                foreach ($object->linkedObjectsIds as $TLink)
                 {
-                    $voyage->fetch($obj->fk_object);
-
-                    if($voyage->fetch($obj->fk_object) <= 0)
+                    foreach ($TLink as $idLink)
                     {
-                        dol_print_error($db);
-                        exit;
+                        $res = $voyage->fetch($idLink);
+
+                        if ($res <= 0)
+                        {
+                            dol_print_error($db);
+                            exit;
+                        }
+                        $voyage->delete($user, $notrigger);
                     }
-                    $voyage->delete($user, $notrigger);
                 }
             }
-
         }
 
 		// Or you can execute some code here
