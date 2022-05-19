@@ -79,7 +79,7 @@ $scandir = GETPOST('scan_dir', 'alpha');
 $type = 'myobject';
 
 $arrayofparameters = array(
-	'VOYAGEBUILDER_MYPARAM1'=>array('type'=>'double', 'css'=>'minwidth500' ,'enabled'=>1),
+	'DEFAULT_TARIF'=>array('type'=>'double', 'css'=>'minwidth500' ,'enabled'=>1),
 //	'VOYAGEBUILDER_MYPARAM2'=>array('type'=>'textarea','enabled'=>1),
 	//'VOYAGEBUILDER_MYPARAM3'=>array('type'=>'category:'.Categorie::TYPE_CUSTOMER, 'enabled'=>1),
 	//'VOYAGEBUILDER_MYPARAM4'=>array('type'=>'emailtemplate:thirdparty', 'enabled'=>1),
