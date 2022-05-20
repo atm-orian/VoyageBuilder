@@ -24,8 +24,7 @@
 
 // Put here all includes required by your class file
 require_once DOL_DOCUMENT_ROOT.'/core/class/commonobject.class.php';
-//require_once DOL_DOCUMENT_ROOT . '/societe/class/societe.class.php';
-//require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
+
 
 /**
  * Class for Voyage
@@ -113,6 +112,7 @@ class Voyage extends CommonObject
         'fk_user_creat'=>array('type'=>'int', 'label'=>'fk_user_creat', 'enabled'=>1, 'visible'=>-2, 'notnull'=>1),
         'fk_user_modif'=>array('type'=>'int', 'label'=>'fk_user_modif', 'enabled'=>1, 'visible'=>-2, 'notnull'=>1),
 	);
+
 	public $rowid;
 	public $ref;
 	public $label;
@@ -125,41 +125,6 @@ class Voyage extends CommonObject
     public $fk_user_modif;
 
 	// END MODULEBUILDER PROPERTIES
-
-
-	// If this object has a subtable with lines
-
-	// /**
-	//  * @var string    Name of subtable line
-	//  */
-	// public $table_element_line = 'voyagebuilder_voyageline';
-
-	// /**
-	//  * @var string    Field with ID of parent key if this object has a parent
-	//  */
-	// public $fk_element = 'fk_voyage';
-
-	// /**
-	//  * @var string    Name of subtable class that manage subtable lines
-	//  */
-	// public $class_element_line = 'Voyageline';
-
-	// /**
-	//  * @var array	List of child tables. To test if we can delete object.
-	//  */
-	// protected $childtables = array();
-
-	// /**
-	//  * @var array    List of child tables. To know object to delete on cascade.
-	//  *               If name matches '@ClassNAme:FilePathClass;ParentFkFieldName' it will
-	//  *               call method deleteByParentField(parentId, ParentFkFieldName) to fetch and delete child object
-	//  */
-	// protected $childtablesoncascade = array('voyagebuilder_voyagedet');
-
-	// /**
-	//  * @var VoyageLine[]     Array of subtable lines
-	//  */
-	// public $lines = array();
 
 
 
@@ -181,11 +146,7 @@ class Voyage extends CommonObject
 			$this->fields['entity']['enabled'] = 0;
 		}
 
-		// Example to show how to set values of fields definition dynamically
-		/*if ($user->rights->voyagebuilder->voyage->read) {
-			$this->fields['myfield']['visible'] = 1;
-			$this->fields['myfield']['noteditable'] = 0;
-		}*/
+
 
 		// Unset fields that are disabled
 		foreach ($this->fields as $key => $val) {
@@ -217,32 +178,9 @@ class Voyage extends CommonObject
 	{
         global $conf;
 
-//        if (!empty(GETPOST('idProduct','int'))){
-//            $idProduct = GETPOST('idProduct','int');
-//            $this->array_options['options_product'] = $idProduct;
-//        }
-
-        if(empty($this->tarif) && !empty($this->array_options['options_tag']))
-        {
-            $TTag = explode(',', $this->array_options['options_tag']);
-            $tarift = $this->findTarifWithOneTag($TTag[0]);
-
-            foreach ($TTag as $valueTag)
-            {
-                if ($tarift > $this->findTarifWithOneTag($valueTag))
-                {
-                    $tarift = $this->findTarifWithOneTag($valueTag);
-                }
-            }
-            $this->tarif = $tarift;
-        }
-        else if(empty($this->tarif) && empty($this->array_options['options_tag'])){
-            $this->tarif = $conf->global->VOYAGEBUILDER_MYPARAM1;
-        }
+        $this->setTarifByTag();
 
 		$resultcreate = $this->createCommon($user, $notrigger);
-
-		//$resultvalidate = $this->validate($user, $notrigger);
 
 
         $this->add_object_linked('product', $this->array_options['options_product'], $user, $notrigger);
@@ -251,53 +189,38 @@ class Voyage extends CommonObject
 	}
 
     /**
-     *  Cette fonction permet de mettre un tarif par défault à un voyage en fonction des catégories qui lui sont associés
-     * Si il n'y a qu'une seule catégorie alors le tarif sera celui qui lui est associé
-     * si il il y a plusieurs catégories alors le tarif sera le tarif le plus petit parmi toutes les catégories associées
-     * @param int $rowidVoyage
-     * @param array $TRowidTags
-     * @return int
+     * En fonction du tag associé à un voyage, un prix lui est associé
+     * @return int|void
      */
-    public function setTarif($rowidVoyage,$TRowidTags)
+    public function setTarifByTag()
     {
-        $i =0;
-        global $db;
-        $object = new voyage($db);
-
-        if(!empty($TRowidTags))
+        global $conf;
+        if(empty($this->tarif) && !empty($this->array_options['options_tag']))
         {
-            if (count($TRowidTags) == 1) // IF THERE IS ONLY ONE TAG
+            $TTag = explode(',', $this->array_options['options_tag']);
+            if($TTag)
             {
-                $tarift = $object->findTarifWithOneTag($TRowidTags[0]);
-                $testSTDOP = $object->setTarifDependsOneTag($rowidVoyage,$tarift);
-                if ($testSTDOP){
-                    return 1;
-                }
-                else return -1;
-            }
+                $tarift = $this->findTarifWithOneTag($TTag[0]);
 
-            else // IF THERE ARE FEW TAGS
-            {
-                $tarift = $object->findTarifWithOneTag($TRowidTags[0]);
-
-                foreach($TRowidTags as $row)
+                foreach ($TTag as $valueTag)
                 {
-                    if ($tarift > $object->findTarifWithOneTag($row))
+                    if ($tarift > $this->findTarifWithOneTag($valueTag))
                     {
-                        $tarift = $object->findTarifWithOneTag($row);
+                        $tarift = $this->findTarifWithOneTag($valueTag);
                     }
                 }
+                $this->tarif = $tarift;
+                    return 1;
             }
-
-            $testSTDOP = $object->setTarifDependsOneTag($rowidVoyage,$tarift);
-            if ($testSTDOP){
-                return 1;
-            }
-            else return -1;
+            return -1;
         }
-        else return -1;
-
+        else if(empty($this->tarif) && empty($this->array_options['options_tag']))
+        {
+            $this->tarif = $conf->global->VOYAGEBUILDER_MYPARAM1;
+                return 1;
+        }
     }
+
 
     /**
      * Cette fonction permet de trouver le tarif associé à une catégorie
@@ -319,25 +242,6 @@ class Voyage extends CommonObject
 
     }
 
-    /**
-     * Cette fonction permet d'enregistrer un tarif sur un voyage souhaité
-     * dans notre cas le tarif sera celui associé à un tag recherché, ce tarif sera récupéré via la fonction findTarifWithOneTag()
-     * @param int $rowidVoyage
-     * @param double $tarift
-     * @return bool
-     */
-    public function setTarifDependsOneTag($rowidVoyage,$tarift)
-    {
-        global $db;
-        $sql = 'UPDATE ' . MAIN_DB_PREFIX.'voyagebuilder_voyage SET tarif = '.$tarift;
-        $sql .=' WHERE rowid='.$rowidVoyage;
-        $resql = $db->query($sql);
-
-        if ($resql) return true;
-
-        return false;
-
-    }
 
     /**
 	 * Clone an object into another one
@@ -559,23 +463,7 @@ class Voyage extends CommonObject
 	{
         global $conf;
 
-        if(empty($this->tarif) && !empty($this->array_options['options_tag']))
-        {
-            $TTag = explode(',', $this->array_options['options_tag']);
-            $tarift = $this->findTarifWithOneTag($TTag[0]);
-
-            foreach ($TTag as $valueTag)
-            {
-                if ($tarift > $this->findTarifWithOneTag($valueTag))
-                {
-                    $tarift = $this->findTarifWithOneTag($valueTag);
-                }
-            }
-            $this->tarif = $tarift;
-        }
-        else if(empty($this->tarif) && empty($this->array_options['options_tag'])){
-            $this->tarif = $conf->global->VOYAGEBUILDER_MYPARAM1;
-        }
+        $this->setTarifByTag();
 
         $this->add_object_linked('product', $this->array_options['options_product'], $user, $notrigger);
 

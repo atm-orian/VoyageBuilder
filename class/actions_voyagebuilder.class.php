@@ -83,6 +83,7 @@ class ActionsVoyageBuilder
 		return 0;
 	}
 
+
 	/**
 	 * Overloading the doActions function : replacing the parent's function with the one below
 	 *
@@ -107,69 +108,6 @@ class ActionsVoyageBuilder
 		if (!$error) {
 			$this->results = array('myreturn' => 999);
 			$this->resprints = 'A text to show';
-			return 0; // or return 1 to replace standard code
-		} else {
-			$this->errors[] = 'Error message';
-			return -1;
-		}
-	}
-
-
-	/**
-	 * Overloading the doMassActions function : replacing the parent's function with the one below
-	 *
-	 * @param   array           $parameters     Hook metadatas (context, etc...)
-	 * @param   CommonObject    $object         The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
-	 * @param   string          $action         Current action (if set). Generally create or edit or null
-	 * @param   HookManager     $hookmanager    Hook manager propagated to allow calling another hook
-	 * @return  int                             < 0 on error, 0 on success, 1 to replace standard code
-	 */
-	public function doMassActions($parameters, &$object, &$action, $hookmanager)
-	{
-		global $conf, $user, $langs;
-
-		$error = 0; // Error counter
-
-		/* print_r($parameters); print_r($object); echo "action: " . $action; */
-		if (in_array($parameters['currentcontext'], array('somecontext1', 'somecontext2'))) {		// do something only for the context 'somecontext1' or 'somecontext2'
-			foreach ($parameters['toselect'] as $objectid) {
-				// Do action on each object id
-			}
-		}
-
-		if (!$error) {
-			$this->results = array('myreturn' => 999);
-			$this->resprints = 'A text to show';
-			return 0; // or return 1 to replace standard code
-		} else {
-			$this->errors[] = 'Error message';
-			return -1;
-		}
-	}
-
-
-	/**
-	 * Overloading the addMoreMassActions function : replacing the parent's function with the one below
-	 *
-	 * @param   array           $parameters     Hook metadatas (context, etc...)
-	 * @param   CommonObject    $object         The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
-	 * @param   string          $action         Current action (if set). Generally create or edit or null
-	 * @param   HookManager     $hookmanager    Hook manager propagated to allow calling another hook
-	 * @return  int                             < 0 on error, 0 on success, 1 to replace standard code
-	 */
-	public function addMoreMassActions($parameters, &$object, &$action, $hookmanager)
-	{
-		global $conf, $user, $langs;
-
-		$error = 0; // Error counter
-		$disabled = 1;
-
-		/* print_r($parameters); print_r($object); echo "action: " . $action; */
-		if (in_array($parameters['currentcontext'], array('somecontext1', 'somecontext2'))) {		// do something only for the context 'somecontext1' or 'somecontext2'
-			$this->resprints = '<option value="0"'.($disabled ? ' disabled="disabled"' : '').'>'.$langs->trans("VoyageBuilderMassAction").'</option>';
-		}
-
-		if (!$error) {
 			return 0; // or return 1 to replace standard code
 		} else {
 			$this->errors[] = 'Error message';
@@ -206,6 +144,7 @@ class ActionsVoyageBuilder
 		return $ret;
 	}
 
+
 	/**
 	 * Execute action
 	 *
@@ -232,46 +171,6 @@ class ActionsVoyageBuilder
 		}
 
 		return $ret;
-	}
-
-
-
-	/**
-	 * Overloading the loadDataForCustomReports function : returns data to complete the customreport tool
-	 *
-	 * @param   array           $parameters     Hook metadatas (context, etc...)
-	 * @param   string          $action         Current action (if set). Generally create or edit or null
-	 * @param   HookManager     $hookmanager    Hook manager propagated to allow calling another hook
-	 * @return  int                             < 0 on error, 0 on success, 1 to replace standard code
-	 */
-	public function loadDataForCustomReports($parameters, &$action, $hookmanager)
-	{
-		global $conf, $user, $langs;
-
-		$langs->load("voyagebuilder@voyagebuilder");
-
-		$this->results = array();
-
-		$head = array();
-		$h = 0;
-
-		if ($parameters['tabfamily'] == 'voyagebuilder') {
-			$head[$h][0] = dol_buildpath('/module/index.php', 1);
-			$head[$h][1] = $langs->trans("Home");
-			$head[$h][2] = 'home';
-			$h++;
-
-			$this->results['title'] = $langs->trans("VoyageBuilder");
-			$this->results['picto'] = 'voyagebuilder@voyagebuilder';
-		}
-
-		$head[$h][0] = 'customreports.php?objecttype='.$parameters['objecttype'].(empty($parameters['tabfamily']) ? '' : '&tabfamily='.$parameters['tabfamily']);
-		$head[$h][1] = $langs->trans("CustomReports");
-		$head[$h][2] = 'customreports';
-
-		$this->results['head'] = $head;
-
-		return 1;
 	}
 
 

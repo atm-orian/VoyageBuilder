@@ -115,23 +115,23 @@ class InterfaceVoyageBuilderTriggers extends DolibarrTriggers
 
         if ($action == 'PRODUCT_DELETE')
         {
-            $select = "SELECT fk_object FROM ". MAIN_DB_PREFIX. "voyagebuilder_voyage_extrafields WHERE product=".$object->id;
-            $reselect = $db->query($select);
-            $voyage = new Voyage($db);
+            $sql = "SELECT fk_object FROM ". MAIN_DB_PREFIX. "voyagebuilder_voyage_extrafields WHERE product=".$object->id;
+            $resql = $db->query($sql);
 
-            if(!$reselect)
+            if(!$resql)
             {
                 dol_print_error($db);
                 exit;
             }
+            $voyage = new Voyage($db);
 
-            while($obj = $db->fetch_object($reselect))
+            while($obj = $db->fetch_object($resql))
             {
                 if(!empty($obj->fk_object))
                 {
-                    $voyage->fetch($obj->fk_object);
+                    $res = $voyage->fetch($obj->fk_object);
 
-                    if($voyage->fetch($obj->fk_object) <= 0)
+                    if($res <= 0)
                     {
                         dol_print_error($db);
                         exit;
