@@ -118,26 +118,28 @@ class InterfaceVoyageBuilderTriggers extends DolibarrTriggers
             $sql = "SELECT fk_object FROM ". MAIN_DB_PREFIX. "voyagebuilder_voyage_extrafields WHERE product=".$object->id;
             $resql = $db->query($sql);
 
-            if(!$resql)
+            if($resql)
             {
+                $voyage = new Voyage($db);
+
+                while($obj = $db->fetch_object($resql))
+                {
+                    if(!empty($obj->fk_object))
+                    {
+                        $res = $voyage->fetch($obj->fk_object);
+
+                        if($res <= 0)
+                        {
+                            dol_print_error($db);
+                            exit;
+                        }
+                        $voyage->delete($user, $notrigger);
+                    }
+                }
+            }
+            else {
                 dol_print_error($db);
                 exit;
-            }
-            $voyage = new Voyage($db);
-
-            while($obj = $db->fetch_object($resql))
-            {
-                if(!empty($obj->fk_object))
-                {
-                    $res = $voyage->fetch($obj->fk_object);
-
-                    if($res <= 0)
-                    {
-                        dol_print_error($db);
-                        exit;
-                    }
-                    $voyage->delete($user, $notrigger);
-                }
             }
 
         }

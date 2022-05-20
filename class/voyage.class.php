@@ -190,7 +190,7 @@ class Voyage extends CommonObject
 
     /**
      * En fonction du tag associé à un voyage, un prix lui est associé
-     * @return int|void
+     * @return int      -1 if KO, 1 if OK
      */
     public function setTarifByTag()
     {
@@ -216,7 +216,7 @@ class Voyage extends CommonObject
         }
         else if(empty($this->tarif) && empty($this->array_options['options_tag']))
         {
-            $this->tarif = $conf->global->VOYAGEBUILDER_MYPARAM1;
+            $this->tarif = $conf->global->DEFAULT_TARIF;
                 return 1;
         }
     }
