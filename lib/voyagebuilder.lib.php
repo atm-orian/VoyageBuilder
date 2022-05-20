@@ -40,12 +40,12 @@ function voyagebuilderAdminPrepareHead()
 	$head[$h][2] = 'settings';
 	$h++;
 
-	/*
-	$head[$h][0] = dol_buildpath("/voyagebuilder/admin/myobject_extrafields.php", 1);
+	/**/
+	$head[$h][0] = dol_buildpath("/voyagebuilder/admin/voyage_extrafields.php", 1);
 	$head[$h][1] = $langs->trans("ExtraFields");
-	$head[$h][2] = 'myobject_extrafields';
+	$head[$h][2] = 'voyage_extrafields';
 	$h++;
-	*/
+	/**/
 
 	$head[$h][0] = dol_buildpath("/voyagebuilder/admin/about.php", 1);
 	$head[$h][1] = $langs->trans("About");

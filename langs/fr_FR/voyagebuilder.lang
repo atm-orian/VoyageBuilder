@@ -28,11 +28,7 @@ ModuleVoyageBuilderDesc = VoyageBuilder description
 VoyageBuilderSetup = VoyageBuilder setup
 Settings = Settings
 VoyageBuilderSetupPage = VoyageBuilder setup page
-VOYAGEBUILDER_MYPARAM1 = My param 1
-VOYAGEBUILDER_MYPARAM1Tooltip = My param 1 tooltip
-VOYAGEBUILDER_MYPARAM2=My param 2
-VOYAGEBUILDER_MYPARAM2Tooltip=My param 2 tooltip
-
+DEFAULT_TARIF = Tarif par défaut
 
 #
 # About page
@@ -51,3 +47,35 @@ MyPageName = My page name
 #
 MyWidget = My widget
 MyWidgetDescription = My widget description
+
+#
+# Extrafields
+#
+Tag = Catégorie
+
+#
+# Menu
+#
+
+ListVoyage = Liste des voyages
+NewVoyage = Nouveau voyage
+VoyageExport = Voyage - Export de la liste des voyages
+
+#
+# Dictionnaire
+#
+
+VoyageBTag = VoyageBuilder - Catégorie de voyage
+
+#
+# Hook
+#
+
+CreateVoyage = Creer Voyage
+
+
+#
+# Statut
+#
+
+VoyageValidate = Validé

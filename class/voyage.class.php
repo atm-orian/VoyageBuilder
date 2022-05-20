@@ -24,8 +24,7 @@
 
 // Put here all includes required by your class file
 require_once DOL_DOCUMENT_ROOT.'/core/class/commonobject.class.php';
-//require_once DOL_DOCUMENT_ROOT . '/societe/class/societe.class.php';
-//require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
+
 
 /**
  * Class for Voyage
@@ -35,12 +34,12 @@ class Voyage extends CommonObject
 	/**
 	 * @var string ID of module.
 	 */
-	public $module = 'voyagebuilder';
+//	public $module = 'voyagebuilder';
 
 	/**
 	 * @var string ID to identify managed object.
 	 */
-	public $element = 'voyage';
+	public $element = 'voyagebuilder';
 
 	/**
 	 * @var string Name of table without prefix where object is stored. This is also the key used for extrafields management.
@@ -104,87 +103,28 @@ class Voyage extends CommonObject
 	public $fields=array(
 		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
 		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'validate'=>'1', 'comment'=>"Reference of object"),
-        'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>1, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak','showoncombobox'=>'2', 'validate'=>'1',),
-        'tarif' => array('type' => 'double', 'length' => 10, 'label' => 'Price', 'enabled' => 1, 'visible' => 1, 'notnull' => 0, 'index' => 1, 'position' => 15),
-        'pays' => array('type' => 'integer:Ccountry:core/class/ccountry.class.php', 'label' => 'Pays', 'length' => 50, 'enabled' => 1, 'visible' => 1, 'notnull' => 0, 'position' => 16, 'required' => true, 'default' => -1),
-        'date_deb' => array('type' => 'date','label' => 'Date de départ', 'enabled' => 1, 'visible' => 1, 'notnull' => 0, 'position' => 17),
-        'date_fin' => array('type' => 'date', 'label' => 'Date d\'arrivée', 'enabled' => 1, 'visible' => 1, 'notnull' => 0, 'position' => 18)
-
-//		'amount' => array('type'=>'price', 'label'=>'Amount', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>1, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount", 'validate'=>'1',),
-//		'qty' => array('type'=>'real', 'label'=>'Qty', 'enabled'=>'1', 'position'=>45, 'notnull'=>0, 'visible'=>1, 'default'=>'0', 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"Help text for quantity", 'validate'=>'1',),
-//		'fk_soc' => array('type'=>'integer:Societe:societe/class/societe.class.php:1:status=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'ThirdParty', 'enabled'=>'1', 'position'=>50, 'notnull'=>-1, 'visible'=>1, 'index'=>1, 'css'=>'maxwidth500 widthcentpercentminusxx', 'help'=>"LinkToThirparty", 'validate'=>'1',),
-//		'fk_project' => array('type'=>'integer:Project:projet/class/project.class.php:1', 'label'=>'Project', 'enabled'=>'1', 'position'=>52, 'notnull'=>-1, 'visible'=>-1, 'index'=>1, 'css'=>'maxwidth500 widthcentpercentminusxx', 'validate'=>'1',),
-//		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>3, 'validate'=>'1',),
-//		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0, 'cssview'=>'wordbreak', 'validate'=>'1',),
-//		'note_private' => array('type'=>'html', 'label'=>'NotePrivate', 'enabled'=>'1', 'position'=>62, 'notnull'=>0, 'visible'=>0, 'cssview'=>'wordbreak', 'validate'=>'1',),
-//		'date_creation' => array('type'=>'datetime', 'label'=>'DateCreation', 'enabled'=>'1', 'position'=>500, 'notnull'=>1, 'visible'=>-2,),
-//		'tms' => array('type'=>'timestamp', 'label'=>'DateModification', 'enabled'=>'1', 'position'=>501, 'notnull'=>0, 'visible'=>-2,),
-//		'fk_user_creat' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserAuthor', 'enabled'=>'1', 'position'=>510, 'notnull'=>1, 'visible'=>-2, 'foreignkey'=>'user.rowid',),
-//		'fk_user_modif' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserModif', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>-2,),
-//		'last_main_doc' => array('type'=>'varchar(255)', 'label'=>'LastMainDoc', 'enabled'=>'1', 'position'=>600, 'notnull'=>0, 'visible'=>0,),
-//		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>1000, 'notnull'=>-1, 'visible'=>-2,),
-//		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>1010, 'notnull'=>-1, 'visible'=>0,),
-//		'status' => array('type'=>'integer', 'label'=>'Status', 'enabled'=>'1', 'position'=>1000, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;'), 'validate'=>'1',),
+		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2', 'validate'=>'1',),
+		'tarif' => array('type'=>'price', 'label'=>'Price', 'enabled'=>'1', 'position'=>15, 'notnull'=>0, 'visible'=>1, 'index'=>1,),
+		'pays' => array('type'=>'integer:Ccountry:core/class/ccountry.class.php', 'label'=>'Pays', 'enabled'=>'1', 'position'=>16, 'notnull'=>0, 'visible'=>1, 'default'=>'-1',),
+		'date_deb' => array('type'=>'date', 'label'=>'Date de départ', 'enabled'=>'1', 'position'=>17, 'notnull'=>0, 'visible'=>1,),
+		'date_fin' => array('type'=>'date', 'label'=>'Date d\'arrivée', 'enabled'=>'1', 'position'=>18, 'notnull'=>0, 'visible'=>1,),
+        'status' =>array('type'=>'smallint', 'label'=>'Status', 'enabled'=>1, 'visible'=>0, 'default' =>0,'notnull'=>1),
+        'fk_user_creat'=>array('type'=>'int', 'label'=>'fk_user_creat', 'enabled'=>1, 'visible'=>-2, 'notnull'=>1),
+        'fk_user_modif'=>array('type'=>'int', 'label'=>'fk_user_modif', 'enabled'=>1, 'visible'=>-2, 'notnull'=>1),
 	);
+
 	public $rowid;
 	public $ref;
-    public $tarif;
-    public $pays;
-    public $date_deb;
-    public $date_fin;
+	public $label;
+	public $tarif;
+	public $pays;
+	public $date_deb;
+	public $date_fin;
+    public $status;
+    public $fk_user_creat;
+    public $fk_user_modif;
 
-//	public $label;
-//	public $amount;
-//	public $qty;
-//	public $fk_soc;
-//	public $fk_project;
-//	public $description;
-//	public $note_public;
-//	public $note_private;
-//	public $date_creation;
-//	public $tms;
-//	public $fk_user_creat;
-//	public $fk_user_modif;
-//	public $last_main_doc;
-//	public $import_key;
-//	public $model_pdf;
-//	public $status;
 	// END MODULEBUILDER PROPERTIES
-
-
-	// If this object has a subtable with lines
-
-	// /**
-	//  * @var string    Name of subtable line
-	//  */
-	// public $table_element_line = 'voyagebuilder_voyageline';
-
-	// /**
-	//  * @var string    Field with ID of parent key if this object has a parent
-	//  */
-	// public $fk_element = 'fk_voyage';
-
-	// /**
-	//  * @var string    Name of subtable class that manage subtable lines
-	//  */
-	// public $class_element_line = 'Voyageline';
-
-	// /**
-	//  * @var array	List of child tables. To test if we can delete object.
-	//  */
-	// protected $childtables = array();
-
-	// /**
-	//  * @var array    List of child tables. To know object to delete on cascade.
-	//  *               If name matches '@ClassNAme:FilePathClass;ParentFkFieldName' it will
-	//  *               call method deleteByParentField(parentId, ParentFkFieldName) to fetch and delete child object
-	//  */
-	// protected $childtablesoncascade = array('voyagebuilder_voyagedet');
-
-	// /**
-	//  * @var VoyageLine[]     Array of subtable lines
-	//  */
-	// public $lines = array();
 
 
 
@@ -206,11 +146,7 @@ class Voyage extends CommonObject
 			$this->fields['entity']['enabled'] = 0;
 		}
 
-		// Example to show how to set values of fields definition dynamically
-		/*if ($user->rights->voyagebuilder->voyage->read) {
-			$this->fields['myfield']['visible'] = 1;
-			$this->fields['myfield']['noteditable'] = 0;
-		}*/
+
 
 		// Unset fields that are disabled
 		foreach ($this->fields as $key => $val) {
@@ -240,14 +176,74 @@ class Voyage extends CommonObject
 	 */
 	public function create(User $user, $notrigger = false)
 	{
+        global $conf;
+
+        $this->setTarifByTag();
+
 		$resultcreate = $this->createCommon($user, $notrigger);
 
-		//$resultvalidate = $this->validate($user, $notrigger);
+
+        $this->add_object_linked('product', $this->array_options['options_product'], $user, $notrigger);
 
 		return $resultcreate;
 	}
 
-	/**
+    /**
+     * En fonction du tag associé à un voyage, un prix lui est associé
+     * @return int      -1 if KO, 1 if OK
+     */
+    public function setTarifByTag()
+    {
+        global $conf;
+        if(empty($this->tarif) && !empty($this->array_options['options_tag']))
+        {
+            $TTag = explode(',', $this->array_options['options_tag']);
+            if($TTag)
+            {
+                $tarift = $this->findTarifWithOneTag($TTag[0]);
+
+                foreach ($TTag as $valueTag)
+                {
+                    if ($tarift > $this->findTarifWithOneTag($valueTag))
+                    {
+                        $tarift = $this->findTarifWithOneTag($valueTag);
+                    }
+                }
+                $this->tarif = $tarift;
+                    return 1;
+            }
+            return -1;
+        }
+        else if(empty($this->tarif) && empty($this->array_options['options_tag']))
+        {
+            $this->tarif = $conf->global->DEFAULT_TARIF;
+                return 1;
+        }
+    }
+
+
+    /**
+     * Cette fonction permet de trouver le tarif associé à une catégorie
+     * @param int $valueRowidTag
+     * @return double
+     */
+    public function findTarifWithOneTag($valueRowidTag)
+    {
+        global $db;
+        $sql = 'SELECT vt.tarift FROM '.MAIN_DB_PREFIX.'c_voyagebuilder_voyage_tag vt';
+        $sql .= ' WHERE vt.rowid='.$valueRowidTag;
+        $resql = $db->query($sql);
+
+        if($resql){
+            $obj = $db->fetch_object($resql);
+            return $obj->tarift;
+        }
+        else return -1;
+
+    }
+
+
+    /**
 	 * Clone an object into another one
 	 *
 	 * @param  	User 	$user      	User that creates
@@ -465,7 +461,14 @@ class Voyage extends CommonObject
 	 */
 	public function update(User $user, $notrigger = false)
 	{
-		return $this->updateCommon($user, $notrigger);
+        global $conf;
+
+        $this->setTarifByTag();
+
+        $this->add_object_linked('product', $this->array_options['options_product'], $user, $notrigger);
+
+
+        return $this->updateCommon($user, $notrigger);
 	}
 
 	/**
@@ -622,6 +625,7 @@ class Voyage extends CommonObject
 			$this->db->rollback();
 			return -1;
 		}
+
 	}
 
 
@@ -849,7 +853,7 @@ class Voyage extends CommonObject
 			global $langs;
 			//$langs->load("voyagebuilder@voyagebuilder");
 			$this->labelStatus[self::STATUS_DRAFT] = $langs->transnoentitiesnoconv('Draft');
-			$this->labelStatus[self::STATUS_VALIDATED] = $langs->transnoentitiesnoconv('Enabled');
+			$this->labelStatus[self::STATUS_VALIDATED] = $langs->transnoentitiesnoconv('VoyageValidate');
 			$this->labelStatus[self::STATUS_CANCELED] = $langs->transnoentitiesnoconv('Disabled');
 			$this->labelStatusShort[self::STATUS_DRAFT] = $langs->transnoentitiesnoconv('Draft');
 			$this->labelStatusShort[self::STATUS_VALIDATED] = $langs->transnoentitiesnoconv('Enabled');

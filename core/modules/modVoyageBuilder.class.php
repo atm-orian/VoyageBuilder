@@ -83,12 +83,12 @@ class modVoyageBuilder extends DolibarrModules
 		// If file is in theme/yourtheme/img directory under name object_pictovalue.png, use this->picto='pictovalue'
 		// If file is in module/img directory under name object_pictovalue.png, use this->picto='pictovalue@module'
 		// To use a supported fa-xxx css style of font awesome, use this->picto='xxx'
-		$this->picto = 'generic';
+		$this->picto = 'voyage@voyagebuilder';
 
 		// Define some features supported by module (triggers, login, substitutions, menus, css, etc...)
 		$this->module_parts = array(
 			// Set this to 1 if module has its own trigger directory (core/triggers)
-			'triggers' => 0,
+			'triggers' => 1,
 			// Set this to 1 if module has its own login method file (core/login)
 			'login' => 0,
 			// Set this to 1 if module has its own substitution function file (core/substitutions)
@@ -96,7 +96,7 @@ class modVoyageBuilder extends DolibarrModules
 			// Set this to 1 if module has its own menus handler directory (core/menus)
 			'menus' => 1,
 			// Set this to 1 if module overwrite template dir (core/tpl)
-			'tpl' => 0,
+			'tpl' => 1,
 			// Set this to 1 if module has its own barcode directory (core/modules/barcode)
 			'barcode' => 0,
 			// Set this to 1 if module has its own models directory (core/modules/xxx)
@@ -115,6 +115,8 @@ class modVoyageBuilder extends DolibarrModules
 			),
 			// Set here all hooks context managed by module. To find available hook context, make a "grep -r '>initHooks(' *" on source code. You can also set hook context to 'all'
 			'hooks' => array(
+                'productcard',
+                'commonobject'
 				//   'data' => array(
 				//       'hookcontext1',
 				//       'hookcontext2',
@@ -300,18 +302,18 @@ class modVoyageBuilder extends DolibarrModules
 		/* BEGIN MODULEBUILDER PERMISSIONS */
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Read objects of VoyageBuilder'; // Permission label
-		$this->rights[$r][4] = 'voyage';
-		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->voyagebuilder->voyage->read)
+//		$this->rights[$r][4] = 'voyage';
+		$this->rights[$r][4] = 'read'; // In php code, permission will be checked by test if ($user->rights->voyagebuilder->voyage->read)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Create/Update objects of VoyageBuilder'; // Permission label
-		$this->rights[$r][4] = 'voyage';
-		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->voyagebuilder->voyage->write)
+//		$this->rights[$r][4] = 'voyage';
+		$this->rights[$r][4] = 'write'; // In php code, permission will be checked by test if ($user->rights->voyagebuilder->voyage->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Delete objects of VoyageBuilder'; // Permission label
-		$this->rights[$r][4] = 'voyage';
-		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->voyagebuilder->voyage->delete)
+//		$this->rights[$r][4] = 'voyage';
+		$this->rights[$r][4] = 'delete'; // In php code, permission will be checked by test if ($user->rights->voyagebuilder->voyage->delete)
 		$r++;
 		/* END MODULEBUILDER PERMISSIONS */
 
@@ -327,7 +329,8 @@ class modVoyageBuilder extends DolibarrModules
 			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
 			'mainmenu'=>'voyagebuilder',
 			'leftmenu'=>'',
-			'url'=>'/voyagebuilder/voyagebuilderindex.php',
+//			'url'=>'/voyagebuilder/voyagebuilderindex.php',
+            'url'=>'/voyagebuilder/voyage_list.php',
 			'langs'=>'voyagebuilder@voyagebuilder', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000 + $r,
 			'enabled'=>'$conf->voyagebuilder->enabled', // Define condition to show or hide menu entry. Use '$conf->voyagebuilder->enabled' if entry must be visible if module is enabled.
@@ -387,7 +390,7 @@ class modVoyageBuilder extends DolibarrModules
             'fk_menu'=>'fk_mainmenu=voyagebuilder',
             // This is a Left menu entry
             'type'=>'left',
-            'titre'=>'List Voyage',
+            'titre'=>'ListVoyage',
             'mainmenu'=>'voyagebuilder',
             'leftmenu'=>'voyagebuilder_voyage',
             'url'=>'/voyagebuilder/voyage_list.php',
@@ -407,7 +410,7 @@ class modVoyageBuilder extends DolibarrModules
             'fk_menu'=>'fk_mainmenu=voyagebuilder,fk_leftmenu=voyagebuilder_voyage',
             // This is a Left menu entry
             'type'=>'left',
-            'titre'=>'New Voyage',
+            'titre'=>'NewVoyage',
             'mainmenu'=>'voyagebuilder',
             'leftmenu'=>'voyagebuilder_voyage',
             'url'=>'/voyagebuilder/voyage_card.php?action=create',
@@ -427,10 +430,10 @@ class modVoyageBuilder extends DolibarrModules
 		// Exports profiles provided by this module
 		$r = 1;
 		/* BEGIN MODULEBUILDER EXPORT VOYAGE */
-		/*
+
 		$langs->load("voyagebuilder@voyagebuilder");
 		$this->export_code[$r]=$this->rights_class.'_'.$r;
-		$this->export_label[$r]='VoyageLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
+		$this->export_label[$r]='VoyageExport';	// Translation key (used only if key ExportDataset_xxx_z not found)
 		$this->export_icon[$r]='voyage@voyagebuilder';
 		// Define $this->export_fields_array, $this->export_TypeFields_array and $this->export_entities_array
 		$keyforclass = 'Voyage'; $keyforclassfile='/voyagebuilder/class/voyage.class.php'; $keyforelement='voyage@voyagebuilder';
@@ -439,20 +442,20 @@ class modVoyageBuilder extends DolibarrModules
 		//unset($this->export_fields_array[$r]['t.fieldtoremove']);
 		//$keyforclass = 'VoyageLine'; $keyforclassfile='/voyagebuilder/class/voyage.class.php'; $keyforelement='voyageline@voyagebuilder'; $keyforalias='tl';
 		//include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
-		$keyforselect='voyage'; $keyforaliasextra='extra'; $keyforelement='voyage@voyagebuilder';
+		$keyforselect='voyagebuilder_voyage'; $keyforaliasextra='extra'; $keyforelement='voyage@voyagebuilder';
 		include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
-		//$keyforselect='voyageline'; $keyforaliasextra='extraline'; $keyforelement='voyageline@voyagebuilder';
-		//include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
+//		$keyforselect='voyageline'; $keyforaliasextra='extraline'; $keyforelement='voyageline@voyagebuilder';
+		include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
 		//$this->export_dependencies_array[$r] = array('voyageline'=>array('tl.rowid','tl.ref')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
 		//$this->export_special_array[$r] = array('t.field'=>'...');
 		//$this->export_examplevalues_array[$r] = array('t.field'=>'Example');
 		//$this->export_help_array[$r] = array('t.field'=>'FieldDescHelp');
 		$this->export_sql_start[$r]='SELECT DISTINCT ';
-		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'voyage as t';
-		//$this->export_sql_end[$r]  =' LEFT JOIN '.MAIN_DB_PREFIX.'voyage_line as tl ON tl.fk_voyage = t.rowid';
+		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'voyagebuilder_voyage as t';
+		$this->export_sql_end[$r] .=' LEFT JOIN '.MAIN_DB_PREFIX.'voyagebuilder_voyage_extrafields as extra ON extra.fk_object = t.rowid';
 		$this->export_sql_end[$r] .=' WHERE 1 = 1';
-		$this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('voyage').')';
-		$r++; */
+		//$this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('voyage').')';
+		$r++; /**/
 		/* END MODULEBUILDER EXPORT VOYAGE */
 
 		// Imports profiles provided by this module

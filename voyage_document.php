@@ -84,7 +84,6 @@ dol_include_once('/voyagebuilder/lib/voyagebuilder_voyage.lib.php');
 // Load translation files required by the page
 $langs->loadLangs(array("voyagebuilder@voyagebuilder", "companies", "other", "mails"));
 
-
 $action = GETPOST('action', 'aZ09');
 $confirm = GETPOST('confirm');
 $id = (GETPOST('socid', 'int') ? GETPOST('socid', 'int') : GETPOST('id', 'int'));
@@ -126,10 +125,10 @@ if ($id > 0 || !empty($ref)) {
 
 // There is several ways to check permission.
 // Set $enablepermissioncheck to 1 to enable a minimum low level of checks
-$enablepermissioncheck = 0;
+$enablepermissioncheck = 1;
 if ($enablepermissioncheck) {
-	$permissiontoread = $user->rights->voyagebuilder->voyage->read;
-	$permissiontoadd = $user->rights->voyagebuilder->voyage->write; // Used by the include of actions_addupdatedelete.inc.php and actions_linkedfiles.inc.php
+	$permissiontoread = $user->rights->voyagebuilder->read;
+	$permissiontoadd = $user->rights->voyagebuilder->write; // Used by the include of actions_addupdatedelete.inc.php and actions_linkedfiles.inc.php
 } else {
 	$permissiontoread = 1;
 	$permission = 1;
