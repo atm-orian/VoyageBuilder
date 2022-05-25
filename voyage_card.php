@@ -236,6 +236,19 @@ llxHeader('', $title, $help_url);
 // });
 // </script>';
 
+if($object->array_options['options_product'])
+{
+    print '<script type="text/javascript">
+        $(document).ready(function() {
+
+        	/*init_myfunc();*/
+        	$("#voyagebuilder_extras_product_'.$object->id.'").hide();
+            $("#voyagebuilder_extras_product_'.$object->id.'").parent().hide();
+
+        });
+        </script>';
+}
+
 
 // Part to create
 if ($action == 'create') {

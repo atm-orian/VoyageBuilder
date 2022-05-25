@@ -1,5 +1,19 @@
-# CHANGELOG VOYAGEBUILDER FOR [DOLIBARR ERP CRM](https://www.dolibarr.org)
+# Change Log
+All notable changes to this project will be documented in this file.
 
-## 1.0
+## [Unreleased]
 
-Initial version
+- NEW : Ajout de fonctions pour cacher des éléments *2022-05-20* - 1.1.0
+
+
+## Version 1.0  (2022-05-20)
+
+
+### Added
+
+- NEW (describe new feature)
+
+### Changed
+
+- FIX (describe bug fixes)
+
