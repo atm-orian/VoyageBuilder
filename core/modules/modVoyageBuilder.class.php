@@ -426,6 +426,27 @@ class modVoyageBuilder extends DolibarrModules
             'user'=>2
         );
 
+        $this->menu[$r++]=array(
+            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=voyagebuilder,fk_leftmenu=voyagebuilder_voyage',
+            // This is a Left menu entry
+            'type'=>'left',
+            'titre'=>'importCsv',
+            'mainmenu'=>'voyagebuilder',
+            'leftmenu'=>'voyagebuilder_voyage',
+            'url'=>'/voyagebuilder/scripts/import_csv.php',
+            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'langs'=>'voyagebuilder@voyagebuilder',
+            'position'=>1100+$r,
+            // Define condition to show or hide menu entry. Use '$conf->voyagebuilder->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+            'enabled'=>'$conf->voyagebuilder->enabled',
+            // Use 'perms'=>'$user->rights->voyagebuilder->level1->level2' if you want your menu with a permission rules
+            'perms'=>'1',
+            'target'=>'',
+            // 0=Menu for internal users, 1=external users, 2=both
+            'user'=>2
+        );
+
 		/* END MODULEBUILDER LEFTMENU VOYAGE */
 		// Exports profiles provided by this module
 		$r = 1;

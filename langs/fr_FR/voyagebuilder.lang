@@ -60,6 +60,7 @@ Tag = Catégorie
 ListVoyage = Liste des voyages
 NewVoyage = Nouveau voyage
 VoyageExport = Voyage - Export de la liste des voyages
+importCsv = Import Csv
 
 #
 # Dictionnaire
