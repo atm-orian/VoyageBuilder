@@ -428,7 +428,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 	// Other attributes. Fields from hook formObjectOptions and Extrafields.
 	include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_view.tpl.php';
 
-
+//    var_dump($object,$object->array_options['options_tag'],$object->array_options['options_product']);
 
 	print '</table>';
 	print '</div>';

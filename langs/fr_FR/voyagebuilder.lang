@@ -71,12 +71,12 @@ VoyageBTag = VoyageBuilder - Catégorie de voyage
 #
 # Hook
 #
-
 CreateVoyage = Creer Voyage
-
 
 #
 # Statut
 #
 
 VoyageValidate = Validé
+
+

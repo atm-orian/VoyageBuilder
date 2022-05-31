@@ -24,6 +24,12 @@ CREATE TABLE llx_voyagebuilder_voyage(
 	date_deb date, 
 	date_fin date, 
 	tag integer,
-    status integer
+    status integer,
+    tiers integer,
+    date_creation date DEFAULT NULL,
+    tms timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    entity int(11) DEFAULT NULL,
+    fk_user_creat int(11) NOT NULL,
+    fk_user_modif int(11) NOT NULL
 	-- END MODULEBUILDER FIELDS
 ) ENGINE=innodb;

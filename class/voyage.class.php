@@ -102,15 +102,16 @@ class Voyage extends CommonObject
 	 */
 	public $fields=array(
 		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
-		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'validate'=>'1', 'comment'=>"Reference of object"),
-		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2', 'validate'=>'1',),
-		'tarif' => array('type'=>'price', 'label'=>'Price', 'enabled'=>'1', 'position'=>15, 'notnull'=>0, 'visible'=>1, 'index'=>1,),
-		'pays' => array('type'=>'integer:Ccountry:core/class/ccountry.class.php', 'label'=>'Pays', 'enabled'=>'1', 'position'=>16, 'notnull'=>0, 'visible'=>1, 'default'=>'-1',),
-		'date_deb' => array('type'=>'date', 'label'=>'Date de départ', 'enabled'=>'1', 'position'=>17, 'notnull'=>0, 'visible'=>1,),
-		'date_fin' => array('type'=>'date', 'label'=>'Date d\'arrivée', 'enabled'=>'1', 'position'=>18, 'notnull'=>0, 'visible'=>1,),
+		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>2, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'validate'=>'1', 'comment'=>"Reference of object"),
+		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>3, 'notnull'=>1, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2', 'validate'=>'1',),
+		'tarif' => array('type'=>'price', 'label'=>'Price', 'enabled'=>'1', 'position'=>4, 'notnull'=>0, 'visible'=>1, 'index'=>1,),
+		'pays' => array('type'=>'integer:Ccountry:core/class/ccountry.class.php', 'label'=>'Pays', 'enabled'=>'1', 'position'=>5, 'notnull'=>0, 'visible'=>1, 'default'=>'-1',),
+		'date_deb' => array('type'=>'date', 'label'=>'Date de départ', 'enabled'=>'1', 'position'=>6, 'notnull'=>0, 'visible'=>1,),
+		'date_fin' => array('type'=>'date', 'label'=>'Date d\'arrivée', 'enabled'=>'1', 'position'=>7, 'notnull'=>0, 'visible'=>1,),
         'status' =>array('type'=>'smallint', 'label'=>'Status', 'enabled'=>1, 'visible'=>0, 'default' =>0,'notnull'=>1),
         'fk_user_creat'=>array('type'=>'int', 'label'=>'fk_user_creat', 'enabled'=>1, 'visible'=>-2, 'notnull'=>1),
         'fk_user_modif'=>array('type'=>'int', 'label'=>'fk_user_modif', 'enabled'=>1, 'visible'=>-2, 'notnull'=>1),
+        'tiers'=>array('type'=>'integer:Societe:societe/class/societe.class.php', 'label'=>'Tiers', 'enabled'=>1, 'visible'=>1, 'notnull'=>0, 'position'=>10)
 	);
 
 	public $rowid;
@@ -123,6 +124,7 @@ class Voyage extends CommonObject
     public $status;
     public $fk_user_creat;
     public $fk_user_modif;
+    public $tiers;
 
 	// END MODULEBUILDER PROPERTIES
 
@@ -145,7 +147,6 @@ class Voyage extends CommonObject
 		if (empty($conf->multicompany->enabled) && isset($this->fields['entity'])) {
 			$this->fields['entity']['enabled'] = 0;
 		}
-
 
 
 		// Unset fields that are disabled
@@ -174,7 +175,7 @@ class Voyage extends CommonObject
 	 * @param  bool $notrigger false=launch triggers after, true=disable triggers
 	 * @return int             <0 if KO, Id of created object if OK
 	 */
-	public function create(User $user, $notrigger = false)
+	public function create(User $user, $notrigger = false, $import = false)
 	{
         global $conf;
 
@@ -240,6 +241,56 @@ class Voyage extends CommonObject
         }
         else return -1;
 
+    }
+
+    /**
+     * @param $labelTag
+     * @return int
+     */
+    public function getIdTag($labelTag)
+    {
+        global $db;
+        $sql = 'SELECT vt.rowid FROM '.MAIN_DB_PREFIX.'c_voyagebuilder_voyage_tag vt';
+        $sql .= " WHERE vt.label = '".$labelTag."'";
+        print($sql);
+        $resql = $db->query($sql);
+
+        if($resql){
+            $obj = $db->fetch_object($resql);
+            return $obj->rowid;
+        }
+        else return -1;
+    }
+
+    /**
+     * @param $labelCountry
+     * @return int
+     */
+    public function getIdCountry($labelCountry)
+    {
+        global $db;
+        $sql = 'SELECT c.rowid FROM '.MAIN_DB_PREFIX.'c_country c';
+        $sql .= " WHERE c.label = '".$labelCountry."'";
+        print($sql);
+        $resql = $db->query($sql);
+
+        if($resql){
+            $obj = $db->fetch_object($resql);
+            return $obj->rowid;
+        }
+        else return -1;
+    }
+
+    public function createTag($labelTag){
+        global $db;
+        $sql = '';
+        $sql .= '';
+        print($sql);
+        $resql = $db->query($sql);
+
+        if($resql) return 1;
+
+        return -1;
     }
 
 

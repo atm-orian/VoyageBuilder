@@ -37,23 +37,96 @@ require_once DOL_DOCUMENT_ROOT.'/core/class/html.formfile.class.php';
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formprojet.class.php';
 dol_include_once('/voyagebuilder/class/voyage.class.php');
 dol_include_once('/voyagebuilder/lib/voyagebuilder_voyage.lib.php');
+dol_include_once('/voyagebuilder/core/modules/voyagebuilder/modules_voyage.php');
+
 
 llxHeader();
 
-function read($csv){
-    $file = fopen($csv, 'r');
-    if($file === false) return false;
 
-    while (!feof($file) ) {
-        $line[] = fgetcsv($file, 1024);
+
+function read($csv){
+
+    global $db,$user;
+
+
+    $row = 1;
+    if (($handle = fopen($csv, "r")) !== FALSE)
+    {
+        fgetcsv($handle, 1000, ","); // skip la première ligne du csv
+
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) //parcourt le csv
+        {
+            $num = count($data);
+            echo "<p> $num champs à la ligne $row: <br /></p>\n";
+            $row++;
+
+
+                $object = new Voyage($db);
+
+                $object->label= $data[0];
+                $object->tarif= $data[1];
+
+                $object->pays= $object->getIdCountry($data[2]);
+
+
+                $date_dConvert= DateTime::createFromFormat('d/m/y',$data[3]);
+                $object->date_deb = $date_dConvert->format('Y-m-d');
+
+                $date_fConvert= DateTime::createFromFormat('d/m/y',$data[4]);
+                $object->date_fin = $date_fConvert->format('Y-m-d');
+
+                $TLabelTag = explode(", ", $data[5]);
+
+                 foreach ($TLabelTag as $tag)
+                 {
+                     $idTag = $object->getIdTag($tag);
+                     if(!empty($idTag) && $idTag != -1)
+                     {
+                        $object->array_options['options_tag'] = $tag;
+                     }
+                     else if(empty($idTag))
+                     {
+                         $object->createTag($tag);
+                        // create tag
+                     }
+                 }
+
+
+
+
+
+                // search id product by label
+                // $data[10];
+                //if not exist create product
+                // $object->array_options['options_product']=
+                //
+                //var_dump($object, $object->array_options['options_tag']);exit;
+
+                echo $data[0] . "<br />\n";
+                echo $data[1] . "<br />\n";
+                echo $data[2] . "<br />\n";
+                echo $data[3] . "<br />\n";
+                echo $data[4] . "<br />\n";
+                echo $data[5] . "<br />\n";
+                echo $data[6] . "<br />\n";
+                echo $data[7] . "<br />\n";
+                echo $data[8] . "<br />\n";
+                echo $data[9] . "<br />\n";
+                echo $data[10] . "<br />\n";
+                echo "<br />\n";
+
+            exit;
+
+                $object->create($user);
+
+
+        }
+        fclose($handle);
     }
-    fclose($file);
-    return $line;
 }
 
 print '<form method="POST" action="'.$_SERVER["PHP_SELF"].'" enctype="multipart/form-data">';
 print '<input type="hidden" name="token" value="'.newToken().'">';
-print '<label>'.$langs->trans('ChooseFile').'</label> ';
 print '<input type="file" name="nomFichier">';
 print '<input type="submit" value="envoyer" name="submit" class="button small reposition">';
 print '</form>';
