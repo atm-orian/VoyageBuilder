@@ -179,7 +179,9 @@ if (empty($reshook)) {
 	$triggermodname = 'VOYAGEBUILDER_VOYAGE_MODIFY'; // Name of trigger action code to execute when we modify record
 
 	// Actions cancel, add, update, update_extras, confirm_validate, confirm_delete, confirm_deleteline, confirm_clone, confirm_close, confirm_setdraft, confirm_reopen
+//    var_dump($_REQUEST, $object->array_options);
 	include DOL_DOCUMENT_ROOT.'/core/actions_addupdatedelete.inc.php';
+//    var_dump($object->array_options);
 
 	// Actions when linking object each other
 	include DOL_DOCUMENT_ROOT.'/core/actions_dellink.inc.php';
@@ -441,7 +443,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 	// Other attributes. Fields from hook formObjectOptions and Extrafields.
 	include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_view.tpl.php';
 
-
+//    var_dump($object,$object->array_options['options_tag'],$object->array_options['options_product']);
 
 	print '</table>';
 	print '</div>';
