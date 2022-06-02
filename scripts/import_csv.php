@@ -56,9 +56,7 @@ function read($csv){
 
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) //parcourt le csv
         {
-//            $num = count($data);
-//            echo "<p> $num champs à la ligne $row: <br /></p>\n";
-//            $row++;
+            $row++;
 
                 $object = new Voyage($db);
                 $societe = new Societe($db);
@@ -97,7 +95,6 @@ function read($csv){
                          {
                              $object->array_options['options_tag'][$k] = $idTag;
                          }
-
                      }
                  }
 
@@ -120,7 +117,7 @@ function read($csv){
 
                  $idContact = $object->getIdContactV($data[7]);
                 //si contact existe
-                //l'associer au tiers si ce nest pas deja le cas
+                //l'associer au Tiers si ce nest pas deja le cas
                  if(!empty($idContact) && $idContact != -1)
                  {
                     $testIdLink = $object->testLinksoc($idContact);
@@ -163,32 +160,9 @@ function read($csv){
                     }
                 }
 
-
-                //if not exist create product
-                // $object->array_options['options_product']=
-                //
-                //var_dump($object, $object->array_options['options_tag']);exit;
-
-// var_dump($object->label,$object->tarif,$object->pays,$object->date_deb,$object->date_fin, $object->array_options['options_tag'], $object->tiers, $object->array_options['options_product']);
-
-
-//                echo $data[0] . "<br />\n";
-//                echo $data[1] . "<br />\n";
-//                echo $data[2] . "<br />\n";
-//                echo $data[3] . "<br />\n";
-//                echo $data[4] . "<br />\n";
-//                echo $data[5] . "<br />\n";
-//                echo $data[6] . "<br />\n";
-//                echo $data[7] . "<br />\n";
-//                echo $data[8] . "<br />\n";
-//                echo $data[9] . "<br />\n";
-//                echo $data[10] . "<br />\n";
-//                echo "<br />\n";
-
-
             $object->array_options['options_tag'] = implode($object->array_options['options_tag'], ',');
                 $object->create($user);
-//            exit;
+
         }
         fclose($handle);
         echo 'import terminé';
