@@ -252,7 +252,6 @@ class Voyage extends CommonObject
         global $db;
         $sql = 'SELECT vt.rowid FROM '.MAIN_DB_PREFIX.'c_voyagebuilder_voyage_tag vt';
         $sql .= " WHERE vt.label = '".$labelTag."'";
-        print($sql);
         $resql = $db->query($sql);
 
         if($resql){
@@ -271,7 +270,6 @@ class Voyage extends CommonObject
         global $db;
         $sql = 'SELECT c.rowid FROM '.MAIN_DB_PREFIX.'c_country c';
         $sql .= " WHERE c.label = '".$labelCountry."'";
-        print($sql);
         $resql = $db->query($sql);
 
         if($resql){
@@ -281,18 +279,91 @@ class Voyage extends CommonObject
         else return -1;
     }
 
-    public function createTag($labelTag){
+    public function createTag($labelTag, $row){
         global $db;
-        $sql = '';
-        $sql .= '';
-        print($sql);
+        $sql = 'INSERT INTO '.MAIN_DB_PREFIX.'c_voyagebuilder_voyage_tag (code,label,tarift,active) ';
+        $sql .= "VALUES ('".time().'-'.$row."','".$labelTag."',null,1)";
         $resql = $db->query($sql);
-
         if($resql) return 1;
 
         return -1;
     }
 
+    /**
+     * @param $labelTiers
+     * @return int
+     */
+    public function getIdTiers($labelTiers)
+    {
+        global $db;
+        $sql = 'SELECT s.rowid FROM '.MAIN_DB_PREFIX.'societe s';
+        $sql .= " WHERE s.nom = '".$labelTiers."'";
+        $resql = $db->query($sql);
+
+        if($resql){
+            $obj = $db->fetch_object($resql);
+            return $obj->rowid;
+        }
+        else return -1;
+    }
+
+    public function getIdContactV($labelContact)
+    {
+        global $db;
+        $sql = 'SELECT s.rowid FROM '.MAIN_DB_PREFIX.'socpeople s';
+        $sql .= " WHERE s.lastname = '".$labelContact."'";
+        $resql = $db->query($sql);
+
+        if($resql){
+            $obj = $db->fetch_object($resql);
+            return $obj->rowid;
+        }
+        else return -1;
+
+    }
+
+    public function linkFksoc(int $idContact, int $idTiers)
+    {
+        global $db;
+        $sql = 'UPDATE '.MAIN_DB_PREFIX.'socpeople s';
+        $sql .= " SET s.fk_soc = '".$idTiers."'";
+        $sql .= " WHERE s.rowid = '".$idContact."'";
+        $resql = $db->query($sql);
+
+        if($resql){
+            return 1;
+        }
+        else return -1;
+    }
+
+    public function testLinksoc($idContact)
+    {
+        global $db;
+        $sql = 'SELECT s.fk_soc FROM'.MAIN_DB_PREFIX.'socpeople s';
+        $sql .= " WHERE s.rowid = '".$idContact."'";
+        $resql = $db->query($sql);
+
+        if($resql){
+            $obj = $db->fetch_object($resql);
+            return $obj->fk_soc;
+        }
+        else return -1;
+    }
+
+    public function getIdProduct($labelProduct)
+    {
+        global $db;
+        $sql = 'SELECT p.rowid FROM '.MAIN_DB_PREFIX.'product p';
+        $sql .= " WHERE p.ref = '".$labelProduct."'";
+        $resql = $db->query($sql);
+
+        if($resql)
+        {
+            $obj = $db->fetch_object($resql);
+            return $obj->rowid;
+        }
+        else return -1;
+    }
 
     /**
 	 * Clone an object into another one

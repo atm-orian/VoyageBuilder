@@ -131,7 +131,7 @@ class InterfaceVoyageBuilderTriggers extends DolibarrTriggers
                         if($res <= 0)
                         {
                             dol_print_error($db);
-                            exit;
+//                            exit;
                         }
                         $voyage->delete($user, $notrigger);
                     }
